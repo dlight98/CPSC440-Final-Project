@@ -1,5 +1,12 @@
+/*
+Nick Turner
+7/21/2020
+CPSC 440J
+Turner Program 5
+*/
 #include <stdio.h>
 #include <allegro5/allegro.h>
+#include "SpriteSheet.h"
  
 int main(int argc, char **argv){
  
