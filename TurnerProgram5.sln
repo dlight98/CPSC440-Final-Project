@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TurnerProgram5", "TurnerProgram5\TurnerProgram5.vcxproj", "{921E4B54-4CEA-4A91-A000-8267119ADFEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{921E4B54-4CEA-4A91-A000-8267119ADFEE}.Debug|x86.ActiveCfg = Debug|Win32
+		{921E4B54-4CEA-4A91-A000-8267119ADFEE}.Debug|x86.Build.0 = Debug|Win32
+		{921E4B54-4CEA-4A91-A000-8267119ADFEE}.Release|x86.ActiveCfg = Release|Win32
+		{921E4B54-4CEA-4A91-A000-8267119ADFEE}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3ED792B3-1130-4DF8-86F5-58E46A6022CD}
+	EndGlobalSection
+EndGlobal
