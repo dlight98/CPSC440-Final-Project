@@ -5,11 +5,11 @@ CPSC 440J
 Turner Program 5
 */
 #include <allegro5/allegro.h>
+#include <allegro5\allegro_image.h>
+
 #include "Enemy.h"
-#include "SpriteSheet.h"
 
-
-Enemy::Enemy(int width, int height, char* file_name) {
+void Enemy::init(int width, int height, char* file_name) {
 	enemy.InitSprites(width, height, file_name);
 }
 

@@ -38,8 +38,10 @@ int main(int argc, char **argv){
 	int ani_dir = 0; //the direction the character should be facing
 
 
-	//Player Variable
-	Player hero;
+	//Player & Enemy Variables
+	Player hero;	//Ness
+	Enemy starman;	//starman
+	Enemy deluxe;	//starman deluxe
 
 	//Allegro Variables
    ALLEGRO_DISPLAY *display = NULL;
@@ -98,7 +100,7 @@ int main(int argc, char **argv){
    al_start_timer(timer);
    al_play_sample(bgm, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);	//NEW background music is outside while loop
 
-   do {
+   while (!gameOver) {
 	   ALLEGRO_EVENT ev;
 	   al_wait_for_event(event_queue, &ev);
 	   al_wait_for_event(event_queue, &ev);
@@ -188,7 +190,9 @@ int main(int argc, char **argv){
 
 	   al_clear_to_color(al_map_rgb(0, 0, 0));
 	   al_flip_display();
-   } while (!gameOver);	
+	   if (gameOver == true)
+		   break;
+   } 	
 
    //FIXME don't know order around the system("pause") for deallocating memory
    al_destroy_timer(timer);
