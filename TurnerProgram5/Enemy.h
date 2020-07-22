@@ -16,11 +16,16 @@ class Enemy {
 public:
 	Enemy();
 	~Enemy();
-	void init(int width, int height, char* file_name, char* samp);
+	void init(int width, int height, int max_health, char* file_name, char* samp);
+	void hit();
+	bool getLive() { return live; }
+	void setLive(bool l) { live = l; }
 
 private:
 	Sprite enemy;
 	ALLEGRO_SAMPLE* death;
+	int health;
+	bool live;
 };
 
 #endif

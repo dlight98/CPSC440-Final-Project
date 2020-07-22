@@ -10,20 +10,46 @@ Turner Program 5
 #include "Player.h"
 
 Player::Player() {
-	hit = NULL;
-}
-
-void Player::init(int width, int height, char* file_name, char* samp) {
-	hero.InitSprites(width, height, file_name, al_map_rgb(255,255,255));
-	hit = al_load_sample(samp);
-	
+	ouch = NULL;
 }
 
 Player::~Player() {
 	hero.~Sprite();
-	al_destroy_sample(hit);
+	al_destroy_sample(ouch);
+}
+
+void Player::init(int width, int height, char* file_name, char* samp) {
+	hero.InitHeroSprites(width, height, file_name, al_map_rgb(255, 255, 255));
+	ouch = al_load_sample(samp);
+
 }
 
 void Player::movePlayer(int width, int height, int dir, int ani_dir) {
 	hero.UpdateSprites(width, height, dir, ani_dir);
+}
+
+
+bool Player::Collision() {
+	return hero.CollisionEndBlock();
+}
+void Player::DrawSprites(int xoffset, int yoffset) {
+	hero.DrawSprites(xoffset, yoffset);
+}
+float Player::getX() {
+	return hero.getX();
+}
+float Player::getY() {
+	return hero.getY();
+}
+void Player::setX(float sx) {
+	hero.setX(sx);
+}
+void Player::setY(float sy) {
+	hero.setY(sy);
+}
+int Player::getWidth() {
+	return hero.getWidth();
+}
+int Player::getHeight() {
+	return hero.getHeight();
 }

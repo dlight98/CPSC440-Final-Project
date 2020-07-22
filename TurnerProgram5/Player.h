@@ -20,9 +20,20 @@ public:
 	~Player();
 	void init(int width, int height, char* file_name, char* samp);
 	void movePlayer(int width, int height, int dir, int ani_dir);
+	void DrawSprites(int xoffset, int yoffset);
+	bool Collision();
+
+	//the following are used in getting and setting
+	//information related to the hero sprite
+	float getX();
+	float getY();
+	void setX(float sx);
+	void setY(float sy);
+	int getWidth();
+	int getHeight();
 private:
 	Sprite hero;
-	ALLEGRO_SAMPLE* hit;
+	ALLEGRO_SAMPLE* ouch;
 };
 
 #endif

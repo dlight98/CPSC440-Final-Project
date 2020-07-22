@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Attack.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="mappy_A5.c" />
     <ClCompile Include="Main.cpp" />
@@ -95,6 +96,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Attack.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="mappy_A5.h" />
     <ClInclude Include="Player.h" />

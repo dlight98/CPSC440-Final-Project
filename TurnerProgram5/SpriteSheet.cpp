@@ -14,7 +14,7 @@ Sprite::~Sprite()
 {
 	al_destroy_bitmap(image);
 }
-void Sprite::InitSprites(int width, int height, char* name, ALLEGRO_COLOR color)
+void Sprite::InitHeroSprites(int width, int height, char* name, ALLEGRO_COLOR color)
 {
 	x = 80;
 	y = -10;
@@ -36,6 +36,30 @@ void Sprite::InitSprites(int width, int height, char* name, ALLEGRO_COLOR color)
 	image = al_load_bitmap(name);
 	al_convert_mask_to_alpha(image, color);
 }
+
+void Sprite::InitEnemySprites(int width, int height, char* name, ALLEGRO_COLOR color)
+{
+	x = 0;
+	y = -0;
+
+	WIDTH = width;
+	HEIGHT = height;
+
+	/*maxFrame = 16;
+	curFrame = 0;
+	frameCount = 0;
+	frameDelay = 6;
+	frameWidth = 30;
+	frameHeight = 40;
+	animationColumns = 4;
+	animationRows = 4;
+	animationDirection = 2;*/
+	//0 = down, 1 = left, 2 = right, 3 = up
+
+	image = al_load_bitmap(name);
+	al_convert_mask_to_alpha(image, color);
+}
+
 
 void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 {
