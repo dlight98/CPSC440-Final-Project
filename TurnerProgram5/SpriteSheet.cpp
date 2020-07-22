@@ -14,7 +14,7 @@ Sprite::~Sprite()
 {
 	al_destroy_bitmap(image);
 }
-void Sprite::InitSprites(int width, int height)
+void Sprite::InitSprites(int width, int height, char* name)
 {
 	x = 80;
 	y = -10;
@@ -33,7 +33,7 @@ void Sprite::InitSprites(int width, int height)
 	animationDirection = 2;
 	//0 = down, 1 = left, 2 = right, 3 = up
 
-	image = al_load_bitmap("ness_spritesheet.bmp");
+	image = al_load_bitmap(name);
 	al_convert_mask_to_alpha(image, al_map_rgb(255,255,255));
 }
 

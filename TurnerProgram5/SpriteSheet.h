@@ -19,7 +19,7 @@ class Sprite
 public:
 	Sprite();
 	~Sprite();
-	void InitSprites(int width, int height);
+	void InitSprites(int width, int height, char* name);
 	void UpdateSprites(int width, int height, int dir, int ani_dir); //dir 1 = right, 0 = left, 2 = Standing Still
 	void DrawSprites(int xoffset, int yoffset);
 	float getX() {return x;}
