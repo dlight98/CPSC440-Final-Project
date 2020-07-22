@@ -78,11 +78,17 @@ int main(int argc, char **argv){
    //TODO initialize the font
    //ALLEGRO_FONT* font = al_load_font("college.ttf", 18, 0);
 
-   //TODO this is where I init sprites & audio
    bgm = al_load_sample("battle against a clueless foe.wav");
+   //this sound is taken royalty-free from the unused 
+   //soundtrack of the unrealeased game "Oddity"
+   //previously know as "Mother 4"
+   //a fangame based on Earthbound
    if (!bgm) {
 	   exit(9);
    }
+
+   //TODO this is where I init sprites & audio
+
 
    event_queue = al_create_event_queue();
    timer = al_create_timer(1.0 / 60);
