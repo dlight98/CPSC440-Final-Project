@@ -11,9 +11,12 @@ Turner Program 5
 class Enemy {
 
 public:
-	//todo
+	Enemy();
+	Enemy(int width, int height, char* file_name);
+	~Enemy();
 private:
-	//todo
+	Sprite enemy;
+
 };
 
 #endif
