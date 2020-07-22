@@ -11,7 +11,7 @@ Turner Program 5
 class Enemy {
 
 public:
-	Enemy();
+	Enemy() {};
 	Enemy(int width, int height, char* file_name);
 	~Enemy();
 private:

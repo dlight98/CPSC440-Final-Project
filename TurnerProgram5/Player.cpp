@@ -9,9 +9,6 @@ Turner Program 5
 #include "Player.h"
 #include "SpriteSheet.h"
 
-Player::Player() {
-	
-}
 
 Player::Player(int width, int height, char* file_name) {
 	hero.InitSprites(width, height, file_name);

@@ -12,7 +12,7 @@ class Player {
 
 public:
 	//todo
-	Player();
+	Player() {};
 	Player(int width, int height, char* file_name);
 	~Player();
 	void movePlayer(int width, int height, int dir, int ani_dir);
