@@ -16,13 +16,25 @@ class Enemy {
 public:
 	Enemy();
 	~Enemy();
-	void init(int width, int height, int max_health, char* file_name, char* samp);
+	void init(int width, int height, int max_health, int fw, int fh, int max, int col, char* file_name, char* samp);
 	void hit();
 	bool getLive() { return live; }
 	void setLive(bool l) { live = l; }
 
+	void moveEnemy(int width, int height, int dir, int ani_dir);
+	void DrawSprites(int xoffset, int yoffset);
+	bool Collision();
+
+	//the following are used in getting and setting
+	//information related to the enemy sprite
+	float getX();
+	float getY();
+	void setX(float sx);
+	void setY(float sy);
+	int getWidth();
+	int getHeight();
 private:
-	Sprite enemy;
+	Sprite badGuy;
 	ALLEGRO_SAMPLE* death;
 	int health;
 	bool live;

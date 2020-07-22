@@ -49,7 +49,7 @@ int main(int argc, char **argv){
 
 	//Player & Enemy Variables
 	Player hero;	//Ness
-	Enemy starman;	//starman
+	Enemy starman;	//starman	FIXME multiple of these
 	Enemy deluxe;	//starman deluxe
 
 	//Allegro Variables
@@ -100,8 +100,8 @@ int main(int argc, char **argv){
 
    //TODO this is where I init sprites & audio
    hero.init(WIDTH, HEIGHT, "ness_spritesheet.bmp", "wow.wav");
-   starman.init(WIDTH, HEIGHT, 1, "starman_sheet.png", "enemydie.wav");
-   //deluxe.init(WIDTH, HEIGHT, 3, "starman_deluxe_sheet.png", "enemydie.wav");	//TODO init this
+   starman.init(WIDTH, HEIGHT, 1, 50, 70, 3, 3, "starman_sheet.png", "enemydie.wav");
+   //deluxe.init(WIDTH, HEIGHT, 3, 50, 70, 2, 2, "starman_deluxe_sheet.png", "enemydie.wav");	//TODO init this
 
    if (MapLoad("temp.FMP", 1))
 	   return -5;

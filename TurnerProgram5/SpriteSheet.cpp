@@ -37,23 +37,23 @@ void Sprite::InitHeroSprites(int width, int height, char* name, ALLEGRO_COLOR co
 	al_convert_mask_to_alpha(image, color);
 }
 
-void Sprite::InitEnemySprites(int width, int height, char* name, ALLEGRO_COLOR color)
+void Sprite::InitEnemySprites(int width, int height, int fw, int fh, int max, int col, char* name, ALLEGRO_COLOR color)
 {
-	x = 0;
-	y = -0;
+	x = width / 2;
+	y = height / 2;
 
 	WIDTH = width;
 	HEIGHT = height;
 
-	/*maxFrame = 16;
+	maxFrame = max;
 	curFrame = 0;
 	frameCount = 0;
 	frameDelay = 6;
-	frameWidth = 30;
-	frameHeight = 40;
-	animationColumns = 4;
-	animationRows = 4;
-	animationDirection = 2;*/
+	frameWidth = fw;
+	frameHeight = fh;
+	animationColumns = col;
+	animationRows = 1;
+	//animationDirection = 2;
 	//0 = down, 1 = left, 2 = right, 3 = up
 
 	image = al_load_bitmap(name);
