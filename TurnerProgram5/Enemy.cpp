@@ -38,12 +38,31 @@ void Enemy::moveEnemy(int width, int height, int dir, int ani_dir) {
 
 }
 
-bool Enemy::Collision() {
-	return badGuy.CollisionEndBlock();
+void Enemy::CollideEnemy(Player& player, Sprite hero) {
+	if (live)
+	{
+		if (badGuy.getX() - badGuy.getBoundX() < hero.getX() + hero.getBoundX() &&
+			badGuy.getX() + badGuy.getBoundX() > hero.getX() - hero.getBoundX() &&
+			badGuy.getY() - badGuy.getBoundY() < hero.getY() + hero.getBoundY() &&
+			badGuy.getY() + badGuy.getBoundY() > hero.getY() - hero.getBoundY())
+		{
+			//TODO remove player life
+			live = false;
+			al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		}
+		else if (badGuy.getX() < 0)
+		{
+			live = false;
+		}
+	}
 }
 
 void Enemy::DrawSprites(int xoffset, int yoffset) {
 	badGuy.DrawSprites(xoffset, yoffset);
+}
+
+bool Enemy::Collision() {
+	return badGuy.CollisionEndBlock();
 }
 float Enemy::getX() {
 	return badGuy.getX();

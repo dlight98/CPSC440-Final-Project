@@ -21,6 +21,7 @@ public:
 	void init(int width, int height, char* file_name, char* samp);
 	void movePlayer(int width, int height, int dir, int ani_dir);
 	void DrawSprites(int xoffset, int yoffset);
+	//void removeLife()
 	bool Collision();
 
 	//the following are used in getting and setting

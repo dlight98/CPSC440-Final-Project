@@ -12,7 +12,7 @@ Sprite::Sprite()
 }
 Sprite::~Sprite()
 {
-	al_destroy_bitmap(image);
+	//al_destroy_bitmap(image);
 }
 void Sprite::InitHeroSprites(int width, int height, char* name, ALLEGRO_COLOR color)
 {
@@ -57,6 +57,8 @@ void Sprite::InitEnemySprites(int width, int height, int fw, int fh, int max, in
 	//0 = down, 1 = left, 2 = right, 3 = up
 
 	image = al_load_bitmap(name);
+	boundx = al_get_bitmap_width(image);
+	boundy = al_get_bitmap_height(image);
 	al_convert_mask_to_alpha(image, color);
 }
 
@@ -81,6 +83,9 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 	}
 	else if (dir == 1) { //left key
 		x -= 2;
+		if (x <= 0) {
+			x = oldx;
+		}
 		if(++frameCount > frameDelay && ani_dir == 1)
 		{
 			if (curFrame < 4) //Ness is facing left in frames 4 to 7
@@ -93,7 +98,7 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 	}
 	else if (dir == 0) {	//down key
 		y += 2;
-		if (y + frameHeight >= HEIGHT) {
+		if (y + frameHeight >= height) {
 			y = oldy;
 		}
 		if (++frameCount > frameDelay) {
@@ -108,7 +113,7 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 	}
 	else if (dir == 3) {	//up key
 		y -= 2;
-		if (y < 0) {
+		if (y <= 0) {
 			y = oldy;
 		}
 
@@ -126,7 +131,7 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 
 	//check for collided with foreground tiles
 	if (animationDirection == 0) {//collision down
-		if (collided(x, y + frameHeight) || collided(x + frameWidth, y + frameHeight)) {	
+		if (y+frameHeight > height||collided(x, y + frameHeight) || collided(x + frameWidth, y + frameHeight)) {	
 			x = oldx;
 			y = oldy;
 		}
@@ -147,13 +152,18 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 		}
 	}
 	else if (animationDirection == 3) {//collision up
-		if (collided(x, y) || collided(x + frameWidth, y)) {	
+		if (collided(x, y) || collided(x + frameWidth, y) || y < 0) {	
 			x = oldx;
 			y = oldy;
 		}
 	}
 
 }
+
+void Sprite::UpdateEnemySprites(int width, int height, int dir, int ani_dir) {
+
+}
+
 
 bool Sprite::CollisionEndBlock()
 {

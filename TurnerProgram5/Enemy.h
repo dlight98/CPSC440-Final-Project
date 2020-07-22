@@ -10,6 +10,7 @@ Turner Program 5
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include "SpriteSheet.h"
+#include "Player.h"
 
 class Enemy {
 
@@ -20,6 +21,7 @@ public:
 	void hit();
 	bool getLive() { return live; }
 	void setLive(bool l) { live = l; }
+	void CollideEnemy(Player& player, Sprite hero);
 
 	void moveEnemy(int width, int height, int dir, int ani_dir);
 	void DrawSprites(int xoffset, int yoffset);

@@ -125,6 +125,12 @@ int main(int argc, char **argv){
    al_play_sample(bgm, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);	
    //background music is outside while loop so it doesn't reset
 
+   starman.setLive(true);
+   starman.setX(50);
+   starman.setY(50);
+   starman.DrawSprites(WIDTH / 2, HEIGHT / 2);
+
+
    while (!gameOver) {
 	   ALLEGRO_EVENT ev;
 	   al_wait_for_event(event_queue, &ev);
@@ -235,6 +241,9 @@ int main(int argc, char **argv){
 		   //draw foreground tiles
 		   MapDrawFG(xOff, yOff, 0, 0, WIDTH, HEIGHT, 0);
 		   hero.DrawSprites(xOff, yOff);
+		   if (starman.getLive()) {	//DEBUG
+			   starman.DrawSprites(WIDTH / 2, HEIGHT / 2);
+		   }
 		   levelOver = hero.Collision();
 		   if (levelOver && level >= 3) {	//checks if game is over
 			   gameOver = true;
