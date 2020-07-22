@@ -66,7 +66,7 @@ int main(int argc, char **argv){
    if (!al_init_acodec_addon()) {
 	   return -1;
    }
-   if (!al_reserve_samples(1)) {	//TODO FIXME
+   if (!al_reserve_samples(5)) {	//TODO FIXME
 	   return -1;	//IMPORTANT without this only 1 sound will play --> need to put the number of audio files
    }
 
@@ -90,6 +90,7 @@ int main(int argc, char **argv){
    }
 
    //TODO this is where I init sprites & audio
+   hero.init(WIDTH, HEIGHT, "ness_spritesheet.bmp", "wow.wav");
 
 
    event_queue = al_create_event_queue();

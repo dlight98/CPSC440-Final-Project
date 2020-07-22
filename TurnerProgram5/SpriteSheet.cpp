@@ -14,7 +14,7 @@ Sprite::~Sprite()
 {
 	al_destroy_bitmap(image);
 }
-void Sprite::InitSprites(int width, int height, char* name)
+void Sprite::InitSprites(int width, int height, char* name, ALLEGRO_COLOR color)
 {
 	x = 80;
 	y = -10;
@@ -34,7 +34,7 @@ void Sprite::InitSprites(int width, int height, char* name)
 	//0 = down, 1 = left, 2 = right, 3 = up
 
 	image = al_load_bitmap(name);
-	al_convert_mask_to_alpha(image, al_map_rgb(255,255,255));
+	al_convert_mask_to_alpha(image, color);
 }
 
 void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)

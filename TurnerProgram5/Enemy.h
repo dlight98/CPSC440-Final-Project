@@ -14,9 +14,9 @@ Turner Program 5
 class Enemy {
 
 public:
-	Enemy() {};
+	Enemy();
 	~Enemy();
-	void init(int width, int height, char* file_name);
+	void init(int width, int height, char* file_name, char* samp);
 
 private:
 	Sprite enemy;
