@@ -35,7 +35,7 @@ void Enemy::hit() {
 void Enemy::moveEnemy(int width, int height, int dir, int ani_dir) {
 	
 	//should move automatically towards Ness
-	badGuy.UpdateSprites(width, height, 5, 5);	//TEMP
+	badGuy.UpdateEnemySprites(width, height, 5, 5);	//TEMP
 
 }
 

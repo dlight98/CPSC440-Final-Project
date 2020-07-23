@@ -180,7 +180,7 @@ int main(int argc, char **argv){
 
 		   //TODO update enemies
 		   for (int i = 0; i < NUM_BAD1; i++) {	//Update Penguins Dropping
-			   //starman[i].moveEnemy(WIDTH, HEIGHT, 1, 1); //TEMP FIXME
+			   starman[i].moveEnemy(WIDTH, HEIGHT, 1, 1); //TEMP FIXME
 			   //shouldn't be 1 for those
 		   }
 
