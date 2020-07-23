@@ -40,7 +40,10 @@ void Attack::initAttack() {
 
 void Attack::DrawAttack(int xoff, int yoff) {
 	if (live) {
-		al_draw_bitmap(image, x - xoff, y - yoff, 0);
+		al_draw_scaled_bitmap(image, 0,0,
+			al_get_bitmap_width(image), al_get_bitmap_height(image),
+			x - xoff, y - yoff,32,32, 0);
+		//al_draw_bitmap(image, x-xoff,y-yoff,0);
 	}
 }
 
