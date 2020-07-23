@@ -166,9 +166,15 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 
 }
 
-void Sprite::UpdateEnemySprites(int width, int height, int dir, int ani_dir, int health, int &loop, bool &live) {
+void Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int health, int &loop, bool &live) {
 	int oldx = x;
 	int oldy = y;
+
+	boundx = x + frameWidth; // *.9;	//the *.9 makes the hitbox accurate
+	boundy = y + frameHeight; // *.9;	//to the scaled bitmap
+
+	//xp and yp are the players
+	//x and y coordinates
 	if (health <= 0) {
 		if (loop < 3) {
 			if (++frameCount > frameDelay) {
@@ -184,13 +190,60 @@ void Sprite::UpdateEnemySprites(int width, int height, int dir, int ani_dir, int
 		}
 	}
 	else {
+		//move towards ness at 1 per frame (ness moves at 2 per frame)
+		//this allows ness to outrun them
+		if (xp > x) {
+			x++;
+		}
+		else if (xp < x) {
+			x--;
+		}
+		if (yp > y) {
+			y++;
+		}
+		else if (yp < y) {
+			y--;
+		}
 
+		//check collision with foreground tiles
+		//repurposed from UpdateSprites
+		if (y > oldy) {
+			if (boundy > height || collided(x, boundy) || collided(boundx, boundy)) {
+				//collision down
+				//x = oldx;
+				y = oldy;
+			}
+		}
+		else if (y < oldy) {
+			if (collided(x, y) || collided(boundx, y) || y < 0) {
+				//collision up
+				//x = oldx;
+				y = oldy;
+			}
+		}
+		if (x < oldx) {
+
+			if (collided(x, boundy) || collided(x, y) || collided(x, boundy) ||
+				collided(x, boundy / 2)) {
+				//collision detection to the left
+				x = oldx;
+				//y = oldy;
+			}
+		}
+		else if (x > oldx) {
+			if (collided(boundx, boundy) || collided(boundx, y) || 
+				collided(boundx, boundy / 2) || collided(boundx, boundy / 3) ||
+				collided(boundx, oldy + 10) || collided(boundx, boundy - 25)) {
+				//collision detection to the right
+				x = oldx;
+				//y = oldy;
+			}
+		}
+		
 	}
 
-	x = oldx;	//FIXME
-	y = oldy;	//FIXME
-	boundx = x + frameWidth / 2;	//divide by 2 for the resize
-	boundy = y + frameHeight / 2;
+	boundx = x + frameWidth; //*.9;	//this updates the bound boxes
+	boundy = y + frameHeight;// *.9;	//to check for collision
 }
 
 

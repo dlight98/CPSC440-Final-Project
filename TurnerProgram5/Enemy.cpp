@@ -33,10 +33,12 @@ void Enemy::hit() {
 }
 
 //FIXME
-void Enemy::moveEnemy(int width, int height, int dir, int ani_dir) {
+void Enemy::moveEnemy(int width, int height, int xp, int yp) {
+	//xp and yp are the players
+	//x and y coordinates
 	if (live) {
 		//should move automatically towards Ness
-		badGuy.UpdateEnemySprites(width, height, 5, 5, health, death_loop, live);	//TEMP
+		badGuy.UpdateEnemySprites(width, height, xp, yp, health, death_loop, live);	//TEMP
 	}
 
 }
@@ -62,8 +64,12 @@ void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset) {
 			(ey < hby || eby < hby)&&
 			(ey > hy || eby > hby)
 			)*/
-		if (((ex < hx && ebx > hx) || (ex > hbx && ebx < hbx)) &&
-			((ey < hy && eby > hy) || (eby > hby && ey < hby)))
+		/*if (((ex < hx && ebx > hx) || (ex > hbx && ebx < hbx) &&
+			((ey < hy && eby > hy) || (eby > hby && ey < hby)))*/
+		if (((ex < hx && ebx > hx) || (ex > hx && ebx < hx) ||
+			(ex < hbx && ebx > hbx)|| (ex > hbx && ebx < hbx)) &&
+			((ey < hy && eby > hy) || (eby > hby && ey < hby)
+			))
 		{
 			//TODO remove player life
 			player.playOuch();

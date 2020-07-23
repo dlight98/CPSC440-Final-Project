@@ -24,7 +24,7 @@ public:
 	void setLive(bool l) { live = l; }
 	void CollideHero(Player player, Sprite hero, int xoffset, int yoffset);
 
-	void moveEnemy(int width, int height, int dir, int ani_dir);
+	void moveEnemy(int width, int height, int xp, int yp);
 	void DrawSprites(int xoffset, int yoffset);
 	bool Collision();
 	void printDebug(int num);
