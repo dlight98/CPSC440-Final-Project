@@ -17,16 +17,16 @@ class Enemy {
 public:
 	Enemy();
 	~Enemy();
+	Sprite getBad() { return badGuy; }
 	void init(int width, int height, int max_health, int fw, int fh, int max, int col, char* file_name, char* samp);
 	void hit();
 	bool getLive() { return live; }
 	void setLive(bool l) { live = l; }
-	void CollideHero(Player player, Sprite hero);
+	void CollideHero(Player player, Sprite hero, int xoffset, int yoffset);
 
 	void moveEnemy(int width, int height, int dir, int ani_dir);
 	void DrawSprites(int xoffset, int yoffset);
 	bool Collision();
-	void Die();
 	void printDebug(int num);
 
 	//the following are used in getting and setting
@@ -41,6 +41,7 @@ private:
 	Sprite badGuy;
 	ALLEGRO_SAMPLE* death;
 	int health;
+	int death_loop;
 	bool live;
 };
 

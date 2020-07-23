@@ -32,7 +32,7 @@ void Player::init(int width, int height, char* file_name, char* samp) {
 
 void Player::movePlayer(int width, int height, int dir, int ani_dir) {
 	hero.UpdateSprites(width, height, dir, ani_dir);
-	dir = ani_dir;	//use dir with which way the attack fires
+	this->dir = ani_dir;	//use dir with which way the attack fires
 					//FIXME might want to use dir instead?
 }
 

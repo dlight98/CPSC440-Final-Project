@@ -24,7 +24,7 @@ Attack::Attack() {
 	hit = NULL;
 }
 Attack::~Attack() {
-	al_destroy_bitmap(image);
+	//al_destroy_bitmap(image);
 	al_destroy_sample(hit);
 }
 

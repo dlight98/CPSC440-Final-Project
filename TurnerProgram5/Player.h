@@ -18,6 +18,7 @@ public:
 	//todo
 	Player();
 	Player(char* samp);
+	Sprite getHero() { return hero; }
 	~Player();
 	void init(int width, int height, char* file_name, char* samp);
 	void movePlayer(int width, int height, int dir, int ani_dir);
@@ -27,7 +28,6 @@ public:
 	bool Collision();
 	int getDir() { return dir; }
 	//void removeLife()
-	Sprite getHero() { return hero; }
 	void printDebug();	//DEBUG
 
 
@@ -43,6 +43,8 @@ private:
 	Sprite hero;
 	ALLEGRO_SAMPLE* ouch;
 	int dir; //dir 0 = down, 1 = left, 2 = right, 3 = up
+	const int MAX_LIVES = 5;
+	int lives;
 };
 
 #endif

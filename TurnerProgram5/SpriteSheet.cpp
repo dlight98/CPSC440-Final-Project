@@ -50,7 +50,7 @@ void Sprite::InitEnemySprites(int width, int height, int fw, int fh, int max, in
 	maxFrame = max;
 	curFrame = 0;
 	frameCount = 0;
-	frameDelay = 6;
+	frameDelay = 3;
 	frameWidth = fw;	//normally 50
 	frameHeight = fh;	//normally 70
 	cout << "frameWidth: " << frameWidth << endl;	//DEBUG
@@ -166,14 +166,31 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 
 }
 
-void Sprite::UpdateEnemySprites(int width, int height, int dir, int ani_dir) {
+void Sprite::UpdateEnemySprites(int width, int height, int dir, int ani_dir, int health, int &loop, bool &live) {
 	int oldx = x;
 	int oldy = y;
+	if (health <= 0) {
+		if (loop < 3) {
+			if (++frameCount > frameDelay) {
+				frameCount = 0;
+				if (++curFrame > maxFrame) {
+					curFrame = 0;
+					loop++;
+				}
+			}
+		}
+		else {
+			live = false;
+		}
+	}
+	else {
+
+	}
 
 	x = oldx;	//FIXME
 	y = oldy;	//FIXME
-	boundx = x + frameWidth;
-	boundy = y + frameHeight;
+	boundx = x + frameWidth / 2;	//divide by 2 for the resize
+	boundy = y + frameHeight / 2;
 }
 
 
@@ -198,9 +215,34 @@ void Sprite::DrawEnemySprites(int xoffset, int yoffset)
 	int fx = (curFrame % animationColumns) * frameWidth;
 	int fy = (curFrame / animationColumns) * frameHeight;
 
-	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+	//al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+	
+	
+	
+	al_draw_tinted_scaled_rotated_bitmap_region(
+		image,								//bitmap
+		fx, fy, frameWidth, frameHeight,	//source region
+		al_map_rgb(255,255,255),			//tint (white means none)
+		0, 0,								//center of rotation
+		x - xoffset,y - yoffset,			//destination
+		.9, .9,								//scale
+		0,0);								//angle & flags
 }
 
-void Sprite::EnemyDie() {
-
+void Sprite::EnemyDie(int xoffset, int yoffset, bool &l) {
+	curFrame = 0;
+	for (int i = 0; i < 30; i++) {
+		frameCount = 0;
+		while (curFrame < maxFrame) {
+			if (++frameCount > frameDelay) {
+				curFrame++;
+				int fx = (curFrame % animationColumns) * frameWidth;
+				int fy = (curFrame / animationColumns) * frameHeight;
+				al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+				frameCount = 0;
+			}
+		}
+		curFrame = 0;
+	}
+	l = false;
 }

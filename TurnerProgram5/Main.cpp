@@ -188,11 +188,11 @@ int main(int argc, char **argv){
 
 		   //TODO check BOTH enemy collision with hero
 		   for (int i = 0; i < NUM_BAD1; i++) {
-			   starman[i].CollideHero(hero, hero.getHero());
+			   starman[i].CollideHero(hero, hero.getHero(), xOff, yOff);
 		   }
 
 		   if (keys[SPACE]) {
-			   //TODO spawn snowballs
+			   //TODO spawn attack
 		   }
 
 		   render = true;
@@ -263,9 +263,6 @@ int main(int argc, char **argv){
 			   keys[SPACE] = false;
 			   break;
 		   case ALLEGRO_KEY_E:	//DEBUG printed
-			   /*for (int i = 0; i < NUM_BAD1; i++) {
-					//TODO?
-				}*/
 			   starman[0].printDebug(0);
 			   break;
 		   case ALLEGRO_KEY_D:	//DEBUG printed
@@ -352,12 +349,14 @@ bool endValue(int x, int y)
 }
 
 void drawStatus(ALLEGRO_FONT* font, int counter, int width, int height) {
+	//TODO make it have health bar, time bar, etc.
 	al_draw_filled_rectangle(width - 76, 0, width, 20, al_map_rgb(255, 255, 255));
 	al_draw_textf(font, al_map_rgb(0, 0, 0), width - 75, 0, 0, "Time: %i", counter);
 }
 
 void drawIntro() {
 	//TODO
+	//add warning for flashing lights
 }
 
 void drawEnd() {

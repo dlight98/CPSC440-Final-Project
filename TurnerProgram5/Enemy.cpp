@@ -14,6 +14,7 @@ Enemy::Enemy() {
 	death = NULL;
 	health = 1;	//temp setting
 	live = false;
+	death_loop = 0;
 }
 
 Enemy::~Enemy() {
@@ -33,14 +34,15 @@ void Enemy::hit() {
 
 //FIXME
 void Enemy::moveEnemy(int width, int height, int dir, int ani_dir) {
-	
-	//should move automatically towards Ness
-	badGuy.UpdateEnemySprites(width, height, 5, 5);	//TEMP
+	if (live) {
+		//should move automatically towards Ness
+		badGuy.UpdateEnemySprites(width, height, 5, 5, health, death_loop, live);	//TEMP
+	}
 
 }
 
-void Enemy::CollideHero(Player player, Sprite hero) {
-	if (live)
+void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset) {
+	if (live && health > 0)
 	{
 		int ex = badGuy.getX();	//enemy x
 		int ebx = badGuy.getBoundX(); //enemy bound x
@@ -65,20 +67,16 @@ void Enemy::CollideHero(Player player, Sprite hero) {
 		{
 			//TODO remove player life
 			player.playOuch();
-			Die();
+			//al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+			//badGuy.EnemyDie(xoffset, yoffset, live);
+			health = 0;
 		}
 		
 	}
 }
 
-void Enemy::Die() {
-	
-	live = false;
-	al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-}
-
 void Enemy::DrawSprites(int xoffset, int yoffset) {
-	badGuy.DrawSprites(xoffset, yoffset);
+	badGuy.DrawEnemySprites(xoffset, yoffset);
 }
 
 bool Enemy::Collision() {

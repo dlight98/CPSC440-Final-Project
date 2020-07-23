@@ -18,6 +18,7 @@ class Attack {
 public:
 	Attack();
 	~Attack();
+
 	void DrawAttack();
 	void FireAttack(Player* player, int dir, int startx, int starty);
 	void UpdateAttack(int w, int h);
