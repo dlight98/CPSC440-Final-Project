@@ -35,7 +35,7 @@ public:
 private:
 	Sprite hero;
 	ALLEGRO_SAMPLE* ouch;
-	int dir; //dir 0 = down, 1 = left, 2 = right, 3 = left
+	int dir; //dir 0 = down, 1 = left, 2 = right, 3 = up
 };
 
 #endif

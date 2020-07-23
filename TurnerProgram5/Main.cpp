@@ -121,9 +121,9 @@ int main(int argc, char **argv){
 
    //draw foreground tiles
    MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
-   hero.DrawSprites(50, 50);
-   hero.setX(50);
-   hero.setY(50);
+   hero.setX(WIDTH /2);
+   hero.setY(HEIGHT / 2);
+   hero.DrawSprites(WIDTH / 2, HEIGHT / 2);
    al_play_sample(bgm, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);	
    //background music is outside while loop so it doesn't reset
 
@@ -205,15 +205,27 @@ int main(int argc, char **argv){
 			   gameOver = true;
 			   break;
 		   case ALLEGRO_KEY_UP:
+			   if (ani_dir == 3) {
+				   ani_dir = 5;
+			   }
 			   keys[UP] = false;
 			   break;
 		   case ALLEGRO_KEY_DOWN:
+			   if (ani_dir == 0) {
+				   //ani_dir = 5;
+			   }
 			   keys[DOWN] = false;
 			   break;
 		   case ALLEGRO_KEY_LEFT:
+			   if (ani_dir == 1) {
+				   ani_dir = 5;
+			   }
 			   keys[LEFT] = false;
 			   break;
 		   case ALLEGRO_KEY_RIGHT:
+			   if (ani_dir == 2) {
+				   ani_dir = 5;
+			   }
 			   keys[RIGHT] = false;
 			   break;
 		   case ALLEGRO_KEY_SPACE:
