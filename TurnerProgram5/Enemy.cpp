@@ -39,24 +39,42 @@ void Enemy::moveEnemy(int width, int height, int dir, int ani_dir) {
 
 }
 
-void Enemy::CollideEnemy(Player& player, Sprite hero) {
+void Enemy::CollideHero(Player player, Sprite hero) {
 	if (live)
 	{
-		if (badGuy.getX() - badGuy.getBoundX() < hero.getX() + hero.getBoundX() &&
-			badGuy.getX() + badGuy.getBoundX() > hero.getX() - hero.getBoundX() &&
-			badGuy.getY() - badGuy.getBoundY() < hero.getY() + hero.getBoundY() &&
-			badGuy.getY() + badGuy.getBoundY() > hero.getY() - hero.getBoundY())
+		int ex = badGuy.getX();	//enemy x
+		int ebx = badGuy.getBoundX(); //enemy bound x
+		int ey = badGuy.getY();
+		int eby = badGuy.getBoundY();
+		int hx = hero.getX();
+		int hbx = hero.getBoundX();
+		int hy = hero.getY();
+		int hby = hero.getBoundY();
+		
+		/*if (ex - ebx < hx + hbx &&
+			ex + ebx > hx - hbx &&
+			ey - eby < hy + hby &&
+			ey + eby > hy - hby)*/
+		/*if ((ex < hbx || ebx < hbx)&&
+			(ex > hx || ebx > hx) && 
+			(ey < hby || eby < hby)&&
+			(ey > hy || eby > hby)
+			)*/
+		if (((ex < hx && ebx > hx) || (ex > hbx && ebx < hbx)) &&
+			((ey < hy && eby > hy) || (eby > hby && ey < hby)))
 		{
 			//TODO remove player life
-			live = false;
 			player.playOuch();
-			al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+			Die();
 		}
-		else if (badGuy.getX() < 0)
-		{
-			live = false;
-		}
+		
 	}
+}
+
+void Enemy::Die() {
+	
+	live = false;
+	al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void Enemy::DrawSprites(int xoffset, int yoffset) {
@@ -66,16 +84,16 @@ void Enemy::DrawSprites(int xoffset, int yoffset) {
 bool Enemy::Collision() {
 	return badGuy.CollisionEndBlock();
 }
-float Enemy::getX() {
+int Enemy::getX() {
 	return badGuy.getX();
 }
-float Enemy::getY() {
+int Enemy::getY() {
 	return badGuy.getY();
 }
-void Enemy::setX(float sx) {
+void Enemy::setX(int sx) {
 	badGuy.setX(sx);
 }
-void Enemy::setY(float sy) {
+void Enemy::setY(int sy) {
 	badGuy.setY(sy);
 }
 int Enemy::getWidth() {
@@ -83,4 +101,10 @@ int Enemy::getWidth() {
 }
 int Enemy::getHeight() {
 	return badGuy.getHeight();
+}
+
+void Enemy::printDebug(int num) {
+	printf("enemy #%i x and bx: %i, %i\n", num, badGuy.getX(), badGuy.getBoundX());
+	printf("enemy #%i y and by: %i, %i\n", num, badGuy.getY(), badGuy.getBoundY());
+
 }

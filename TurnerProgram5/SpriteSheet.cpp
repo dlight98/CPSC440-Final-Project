@@ -16,8 +16,8 @@ Sprite::~Sprite()
 }
 void Sprite::InitHeroSprites(int width, int height, char* name, ALLEGRO_COLOR color)
 {
-	x = 80;
-	y = -10;
+	x = width / 2;
+	y = height / 2;
 
 	WIDTH = width;
 	HEIGHT = height;
@@ -39,8 +39,10 @@ void Sprite::InitHeroSprites(int width, int height, char* name, ALLEGRO_COLOR co
 
 void Sprite::InitEnemySprites(int width, int height, int fw, int fh, int max, int col, char* name, ALLEGRO_COLOR color)
 {
-	x = width / 2;
-	y = height / 2;
+	//x = width / 2;
+	//y = height / 2;
+	y = 0;
+	x = 0;
 
 	WIDTH = width;
 	HEIGHT = height;
@@ -49,17 +51,19 @@ void Sprite::InitEnemySprites(int width, int height, int fw, int fh, int max, in
 	curFrame = 0;
 	frameCount = 0;
 	frameDelay = 6;
-	frameWidth = fw;
-	frameHeight = fh;
+	frameWidth = fw;	//normally 50
+	frameHeight = fh;	//normally 70
+	cout << "frameWidth: " << frameWidth << endl;	//DEBUG
+	cout << "frameHeight: " << frameHeight << endl;	//DEBUG
 	animationColumns = col;
 	animationRows = 1;
 	//animationDirection = 2;
 	//0 = down, 1 = left, 2 = right, 3 = up
 
 	image = al_load_bitmap(name);
-	boundx = al_get_bitmap_width(image);
-	boundy = al_get_bitmap_height(image);
 	al_convert_mask_to_alpha(image, color);
+	boundx = frameWidth + x;
+	boundy = frameHeight + x;
 }
 
 
@@ -157,11 +161,19 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 			y = oldy;
 		}
 	}
+	boundx = x + frameWidth;
+	boundy = y + frameHeight;
 
 }
 
 void Sprite::UpdateEnemySprites(int width, int height, int dir, int ani_dir) {
+	int oldx = x;
+	int oldy = y;
 
+	x = oldx;	//FIXME
+	y = oldy;	//FIXME
+	boundx = x + frameWidth;
+	boundy = y + frameHeight;
 }
 
 
@@ -179,4 +191,16 @@ void Sprite::DrawSprites(int xoffset, int yoffset)
 	int fy = (curFrame / animationColumns) * frameHeight;
 
 	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+}
+
+void Sprite::DrawEnemySprites(int xoffset, int yoffset)
+{
+	int fx = (curFrame % animationColumns) * frameWidth;
+	int fy = (curFrame / animationColumns) * frameHeight;
+
+	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+}
+
+void Sprite::EnemyDie() {
+
 }

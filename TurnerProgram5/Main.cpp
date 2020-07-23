@@ -50,12 +50,6 @@ int main(int argc, char **argv){
 	int xOff = 0;	//used in determining if map should scroll
 	int yOff = 0;	//used in determining if map should scroll
 
-
-	//Player & Enemy Variables
-	Player hero;	//Ness
-	Enemy starman[10];	//starman	FIXME multiple of these
-	Enemy deluxe;	//starman deluxe
-
 	//Allegro Variables
    ALLEGRO_DISPLAY *display = NULL;
    ALLEGRO_EVENT_QUEUE* event_queue = NULL;
@@ -82,6 +76,13 @@ int main(int argc, char **argv){
    if (!al_reserve_samples(5)) {	//TODO FIXME
 	   return -1;	//IMPORTANT without this only 1 sound will play --> need to put the number of audio files
    }
+
+
+   //Player & Enemy Variables
+   Player hero("wow.wav");	//Ness
+   Enemy starman[10];	//starman
+   Enemy deluxe;	//starman deluxe	FIXME multiple of these
+
 
    //addon init
    al_install_keyboard();
@@ -136,7 +137,7 @@ int main(int argc, char **argv){
    starman[0].setLive(true);
    starman[0].setX(50);
    starman[0].setY(50);
-   starman[0].DrawSprites(50, 50);
+   starman[0].DrawSprites(starman[0].getX(), starman[0].getY());
    //DEBUG end
 
 
@@ -146,6 +147,7 @@ int main(int argc, char **argv){
 	   if (ev.type == ALLEGRO_EVENT_TIMER)
 	   {
 		   render = true;
+		   //Updates the hero character
 		   if (keys[UP]) {
 			   if (ani_dir == 5)
 				   ani_dir = 3;
@@ -171,6 +173,28 @@ int main(int argc, char **argv){
 			}
 		   /*if (hero.Collision()) {	//FIXME ???
 		   }*/
+
+			//TODO update attack
+
+		   //TODO spawn enemies
+
+		   //TODO update enemies
+		   for (int i = 0; i < NUM_BAD1; i++) {	//Update Penguins Dropping
+			   //starman[i].moveEnemy(WIDTH, HEIGHT, 1, 1); //TEMP FIXME
+			   //shouldn't be 1 for those
+		   }
+
+		   //TODO check attack collision with enemy
+
+		   //TODO check BOTH enemy collision with hero
+		   for (int i = 0; i < NUM_BAD1; i++) {
+			   starman[i].CollideHero(hero, hero.getHero());
+		   }
+
+		   if (keys[SPACE]) {
+			   //TODO spawn snowballs
+		   }
+
 		   render = true;
 		   ani_dir = 5;
 
@@ -238,6 +262,15 @@ int main(int argc, char **argv){
 		   case ALLEGRO_KEY_SPACE:
 			   keys[SPACE] = false;
 			   break;
+		   case ALLEGRO_KEY_E:	//DEBUG printed
+			   /*for (int i = 0; i < NUM_BAD1; i++) {
+					//TODO?
+				}*/
+			   starman[0].printDebug(0);
+			   break;
+		   case ALLEGRO_KEY_D:	//DEBUG printed
+			   hero.printDebug();
+			   break;
 		   }
 	   }
 	   if (render && al_is_event_queue_empty(event_queue))
@@ -265,8 +298,9 @@ int main(int argc, char **argv){
 		   MapDrawFG(xOff, yOff, 0, 0, WIDTH, HEIGHT, 0);
 		   hero.DrawSprites(xOff, yOff);
 
+		   //Draws enemies
 		   for (int i = 0; i < NUM_BAD1; i++) {	//FIXME should be changing based on level
-			   if (starman[i].getLive()) {	//DEBUG
+			   if (starman[i].getLive() == true) {	//DEBUG
 				   starman[i].DrawSprites(xOff, yOff);
 			   }
 		   }

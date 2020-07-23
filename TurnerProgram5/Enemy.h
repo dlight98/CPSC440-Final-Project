@@ -21,18 +21,20 @@ public:
 	void hit();
 	bool getLive() { return live; }
 	void setLive(bool l) { live = l; }
-	void CollideEnemy(Player& player, Sprite hero);
+	void CollideHero(Player player, Sprite hero);
 
 	void moveEnemy(int width, int height, int dir, int ani_dir);
 	void DrawSprites(int xoffset, int yoffset);
 	bool Collision();
+	void Die();
+	void printDebug(int num);
 
 	//the following are used in getting and setting
 	//information related to the enemy sprite
-	float getX();
-	float getY();
-	void setX(float sx);
-	void setY(float sy);
+	int getX();
+	int getY();
+	void setX(int sx);
+	void setY(int sy);
 	int getWidth();
 	int getHeight();
 private:

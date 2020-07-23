@@ -11,16 +11,22 @@ Turner Program 5
 
 Player::Player() {
 	ouch = NULL;
+	dir = 5;
+}
+
+Player::Player(char* samp) {
+	ouch = al_load_sample(samp);
+	dir = 5;
 }
 
 Player::~Player() {
 	hero.~Sprite();
-	al_destroy_sample(ouch);
+	//al_destroy_sample(ouch);
 }
 
 void Player::init(int width, int height, char* file_name, char* samp) {
-	hero.InitHeroSprites(width, height, file_name, al_map_rgb(255, 255, 255));
 	ouch = al_load_sample(samp);
+	hero.InitHeroSprites(width, height, file_name, al_map_rgb(255, 255, 255));
 
 }
 
@@ -40,16 +46,16 @@ bool Player::Collision() {
 void Player::DrawSprites(int xoffset, int yoffset) {
 	hero.DrawSprites(xoffset, yoffset);
 }
-float Player::getX() {
+int Player::getX() {
 	return hero.getX();
 }
-float Player::getY() {
+int Player::getY() {
 	return hero.getY();
 }
-void Player::setX(float sx) {
+void Player::setX(int sx) {
 	hero.setX(sx);
 }
-void Player::setY(float sy) {
+void Player::setY(int sy) {
 	hero.setY(sy);
 }
 int Player::getWidth() {
@@ -57,4 +63,9 @@ int Player::getWidth() {
 }
 int Player::getHeight() {
 	return hero.getHeight();
+}
+
+void Player::printDebug() {
+	printf("hero x and bx: %i, %i\n", hero.getX(), hero.getBoundX());
+	printf("hero y and by: %i, %i\n", hero.getY(), hero.getBoundY());
 }

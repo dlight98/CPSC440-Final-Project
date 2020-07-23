@@ -11,6 +11,8 @@ Turner Program 5
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <iostream>
+#include <fstream>
+
 using namespace std;
 class Sprite
 {
@@ -24,19 +26,21 @@ public:
 	void UpdateSprites(int width, int height, int dir, int ani_dir); //dir 0 = down, 1 = left, 2 = right, 3 = left
 	void UpdateEnemySprites(int width, int height, int dir, int ani_dir);
 	void DrawSprites(int xoffset, int yoffset);
-	float getX() {return x;}
-	float getY() {return y;}
-	void setX(float sx) { x = sx; }
-	void setY(float sy) { y = sy; }
-	int getWidth() {return frameWidth;}
-	int getHeight() {return frameHeight;}
+	void DrawEnemySprites(int xoffset, int yoffset);
+	void EnemyDie();
+	int getWidth() { return frameWidth; }
+	int getHeight() { return frameHeight; }
+	void setX(int sx) { x = sx; }
+	void setY(int sy) { y = sy; }
+	int getX() { return x; }
+	int getY() { return y; }
 	int getBoundX() { return boundx; }
 	int getBoundY() { return boundy; }
 	bool CollisionEndBlock();
 
 private:
-	float x;
-	float y;
+	int x;
+	int y;
 
 	int boundx;
 	int boundy;

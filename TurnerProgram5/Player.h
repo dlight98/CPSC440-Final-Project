@@ -17,6 +17,7 @@ class Player {
 public:
 	//todo
 	Player();
+	Player(char* samp);
 	~Player();
 	void init(int width, int height, char* file_name, char* samp);
 	void movePlayer(int width, int height, int dir, int ani_dir);
@@ -26,14 +27,16 @@ public:
 	bool Collision();
 	int getDir() { return dir; }
 	//void removeLife()
+	Sprite getHero() { return hero; }
+	void printDebug();	//DEBUG
 
 
 	//the following are used in getting and setting
 	//information related to the hero sprite
-	float getX();
-	float getY();
-	void setX(float sx);
-	void setY(float sy);
+	int getX();
+	int getY();
+	void setX(int sx);
+	void setY(int sy);
 	int getWidth();
 	int getHeight();
 private:
