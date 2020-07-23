@@ -32,29 +32,16 @@ Attack::~Attack() {
 	al_destroy_sample(hit);
 }
 
-void Attack::initAttack() {
-	//hit = al_load_sample("fire1.wav");
-	image = resize_bitmap("PK_fire_air.png", 32, 32);
-	//image = al_load_bitmap("PK_fire_air.png");
-}
-
 void Attack::DrawAttack(int xoff, int yoff) {
 	if (live) {
 		al_draw_scaled_bitmap(image, 0,0,
 			al_get_bitmap_width(image), al_get_bitmap_height(image),
 			x - xoff, y - yoff,32,32, 0);
-		//al_draw_bitmap(image, x-xoff,y-yoff,0);
 	}
 }
 
 void Attack::FireAttack(Player player, int dire, int startx, int starty) {
 	if (!live) {
-		/*this->dir = dir;
-		x = player->getX();
-		y = player->getY();*/
-		//initAttack();
-
-		//image = resize_bitmap("PK_fire_air.png", 32, 32);
 		image = al_load_bitmap("PK_fire_air.png");
 		dir = dire;
 		x = player.getX();
@@ -65,16 +52,16 @@ void Attack::FireAttack(Player player, int dire, int startx, int starty) {
 void Attack::UpdateAttack(int w, int h) {
 	if (live) {
 		if (dir == 0) {
-			x += 2;
+			y += 2;
 		}
 		else if (dir == 1) {
-			y -= 2;
+			x -= 2;
 		}
 		else if (dir == 2) {
 			x += 2;
 		}
 		else if (dir == 3) {
-			y += 2;
+			y -= 2;
 		}
 
 		if (y <= 0 || x <= 0 || y >= h || x >= w) {
@@ -90,24 +77,3 @@ ALLEGRO_BITMAP* Attack::debugDraw(int gx, int gy) {	//DEBUG for seeing that it d
 	return image;
 }
 
-ALLEGRO_BITMAP* resize_bitmap(const char* name, int target_width, int target_height) {
-	//this simplifies scaling the bitmap to the size we want
-
-	ALLEGRO_BITMAP* temp, * ret_val;    //temporary and return value
-
-	ret_val = al_create_bitmap(target_width, target_height); //this is set up at the correct size
-	temp = al_load_bitmap(name);
-
-
-	al_set_target_bitmap(ret_val);
-	al_draw_scaled_bitmap(temp, 0, 0,
-		al_get_bitmap_width(temp), al_get_bitmap_height(temp),
-		0, 0, target_width, target_height, 0);
-	if (temp == NULL) {
-		cout << "resize_bitmap temp is null" << endl;
-		return NULL;
-	}
-	al_destroy_bitmap(temp);
-
-	return ret_val;
-}

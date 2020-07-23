@@ -54,6 +54,7 @@ int main(int argc, char **argv){
 	int lvl_need1 = NUM_BAD1 * 2;	//starmen needed to be defeated this level
 	int lvl_need2 = NUM_BAD2 * 2;	//deluxe needed to be defeated this level
 	int ani_dir = 5; //the direction the character should be facing
+	int dirs = 0;	//the direction the shot goes
 	int xOff = 0;	//used in determining if map should scroll
 	int yOff = 0;	//used in determining if map should scroll
 	int count = 0;	//used to see when to shoot again
@@ -195,10 +196,17 @@ int main(int argc, char **argv){
 		   else {
 			   hero.movePlayer(WIDTH, HEIGHT, 5, ani_dir);
 			}
+		   if(ani_dir != 5)
+			   dirs = ani_dir;	//this determines the way the attacks fly
 		   /*if (hero.Collision()) {	//FIXME ???
 		   }*/
 
 			//TODO update attack
+		   for (int i = 0; i < NUM_SHOOT; i++) {
+			   if (shoot[i].getLive() == true) {
+				   shoot[i].UpdateAttack(WIDTH, HEIGHT);
+			   }
+		   }
 
 		   //TODO spawn enemies
 
@@ -220,7 +228,7 @@ int main(int argc, char **argv){
 			   if (count % 10 == 0) {
 				   for (int i = 0; i < NUM_SHOOT; i++) {
 					   if (shoot[i].getLive() == false) {
-						   shoot[i].FireAttack(hero, ani_dir, hero.getHero().getX(), hero.getHero().getY());
+						   shoot[i].FireAttack(hero, dirs, hero.getHero().getX(), hero.getHero().getY());
 						   break;
 					   }
 				   }

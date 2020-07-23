@@ -22,7 +22,6 @@ public:
 	void DrawAttack(int xoff, int yoff);
 	void FireAttack(Player player, int dire, int startx, int starty);
 	void UpdateAttack(int w, int h);
-	void initAttack();
 	void CollideAttack(Enemy enemy[], int cSize, int& score);
 	bool getLive() { return live; }
 	ALLEGRO_BITMAP* debugDraw(int gx, int gy);
