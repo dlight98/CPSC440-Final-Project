@@ -49,6 +49,7 @@ void Enemy::CollideEnemy(Player& player, Sprite hero) {
 		{
 			//TODO remove player life
 			live = false;
+			player.playOuch();
 			al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		}
 		else if (badGuy.getX() < 0)

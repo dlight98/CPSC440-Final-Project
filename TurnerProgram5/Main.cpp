@@ -35,6 +35,8 @@ int main(int argc, char **argv){
 	const int HEIGHT = 480;
 	const int TIME_PER_LEVEL = 60;	//seconds
 	const int FPS = 60;
+	const int NUM_BAD1 = 10;	//the weaker enemy starman
+	const int NUM_BAD2 = 5;		//the stronger enemy starman deluxe
 	bool keys[] = { false, false, false, false, false };
 	enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
 
@@ -51,7 +53,7 @@ int main(int argc, char **argv){
 
 	//Player & Enemy Variables
 	Player hero;	//Ness
-	Enemy starman;	//starman	FIXME multiple of these
+	Enemy starman[10];	//starman	FIXME multiple of these
 	Enemy deluxe;	//starman deluxe
 
 	//Allegro Variables
@@ -102,7 +104,10 @@ int main(int argc, char **argv){
 
    //TODO this is where I init sprites & audio
    hero.init(WIDTH, HEIGHT, "ness_spritesheet.bmp", "wow.wav");
-   starman.init(WIDTH, HEIGHT, 1, 50, 70, 3, 3, "starman_sheet.png", "enemydie.wav");
+   for (int i = 0; i < NUM_BAD1; i++) {
+	   starman[i].init(WIDTH, HEIGHT, 1, 50, 70, 3, 3, "starman_sheet.png", "enemydie.wav");
+
+   }
    //deluxe.init(WIDTH, HEIGHT, 3, 50, 70, 2, 2, "starman_deluxe_sheet.png", "enemydie.wav");	//TODO init this
 
    if (MapLoad("area1.FMP", 1))
@@ -127,10 +132,12 @@ int main(int argc, char **argv){
    al_play_sample(bgm, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);	
    //background music is outside while loop so it doesn't reset
 
-   starman.setLive(true);
-   starman.setX(50);
-   starman.setY(50);
-   starman.DrawSprites(WIDTH / 2, HEIGHT / 2);
+   //DEBUG
+   starman[0].setLive(true);
+   starman[0].setX(50);
+   starman[0].setY(50);
+   starman[0].DrawSprites(50, 50);
+   //DEBUG end
 
 
    while (!gameOver) {
@@ -257,9 +264,13 @@ int main(int argc, char **argv){
 		   //draw foreground tiles
 		   MapDrawFG(xOff, yOff, 0, 0, WIDTH, HEIGHT, 0);
 		   hero.DrawSprites(xOff, yOff);
-		   if (starman.getLive()) {	//DEBUG
-			   starman.DrawSprites(450, 240);
+
+		   for (int i = 0; i < NUM_BAD1; i++) {	//FIXME should be changing based on level
+			   if (starman[i].getLive()) {	//DEBUG
+				   starman[i].DrawSprites(xOff, yOff);
+			   }
 		   }
+		   
 		   //levelOver = hero.Collision();
 		   if (levelOver && level >= 3) {	//checks if game is over
 			   gameOver = true;

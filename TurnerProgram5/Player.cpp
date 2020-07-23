@@ -30,6 +30,9 @@ void Player::movePlayer(int width, int height, int dir, int ani_dir) {
 					//FIXME might want to use dir instead?
 }
 
+void Player::playOuch() {
+	al_play_sample(ouch, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
 
 bool Player::Collision() {
 	return hero.CollisionEndBlock();

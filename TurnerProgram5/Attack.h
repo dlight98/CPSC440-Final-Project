@@ -19,7 +19,7 @@ public:
 	Attack();
 	~Attack();
 	void DrawAttack();
-	void FireAttack(ALLEGRO_BITMAP* penguinFiring, float angle, int startx, int starty);
+	void FireAttack(Player* player, int dir, int startx, int starty);
 	void UpdateAttack(int w, int h);
 	void CollideAttack(Enemy enemy[], int cSize, int& score);
 	bool getLive() { return live; }

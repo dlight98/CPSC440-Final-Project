@@ -21,8 +21,12 @@ public:
 	void init(int width, int height, char* file_name, char* samp);
 	void movePlayer(int width, int height, int dir, int ani_dir);
 	void DrawSprites(int xoffset, int yoffset);
-	//void removeLife()
+	void setDir(int d) { dir = d; }
+	void playOuch();
 	bool Collision();
+	int getDir() { return dir; }
+	//void removeLife()
+
 
 	//the following are used in getting and setting
 	//information related to the hero sprite

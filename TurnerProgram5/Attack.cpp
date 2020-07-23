@@ -31,13 +31,37 @@ Attack::~Attack() {
 void Attack::DrawAttack() {
 
 }
-/*void Attack::FireAttack(Player player, int dir, int startx, int starty) {
+
+void Attack::FireAttack(Player* player, int dir, int startx, int starty) {
 	if (!live) {
-
+		/*this->dir = dir;
+		x = player->getX();
+		y = player->getY();*/
+		this->dir = player->getDir();
+		x = player->getX();
+		y = player->getY();
+		live = true;
 	}
-}*/
+}
 void Attack::UpdateAttack(int w, int h) {
+	if (live) {
+		if (dir == 0) {
+			x += 2;
+		}
+		else if (dir == 1) {
+			y -= 2;
+		}
+		else if (dir == 2) {
+			x += 2;
+		}
+		else if (dir == 3) {
+			y += 2;
+		}
 
+		if (y <= 0 || x <= 0 || y >= h || x >= w) {
+			live = false;
+		}
+	}
 }
 void Attack::CollideAttack(Enemy enemy[], int cSize, int& score) {
 
