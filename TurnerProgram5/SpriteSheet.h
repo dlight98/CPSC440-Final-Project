@@ -59,4 +59,6 @@ private:
 	ALLEGRO_BITMAP *image;
 };
 
+ALLEGRO_BITMAP* resize_bitmap(const char* name, int target_width, int target_height);
+
 #endif

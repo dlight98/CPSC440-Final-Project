@@ -7,6 +7,7 @@ Turner Program 5
 #include "SpriteSheet.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Attack.h"
 #include "mappy_A5.h"
 
 #include <allegro5/allegro.h>
@@ -31,12 +32,14 @@ void drawEnd();
 int main(int argc, char **argv){
  
 	//Constants
-	const int WIDTH = 900;	//FIXME screen size?
+	const int WIDTH = 900;
 	const int HEIGHT = 480;
+	const int TRUE_HEIGHT = 580;	//gives space for the status bar
 	const int TIME_PER_LEVEL = 60;	//seconds
 	const int FPS = 60;
-	const int NUM_BAD1 = 10;	//the weaker enemy starman
-	const int NUM_BAD2 = 5;		//the stronger enemy starman deluxe
+	const int NUM_BAD1 = 5;	//the weaker enemy starman
+	const int NUM_BAD2 = 2;		//the stronger enemy starman deluxe
+	const int NUM_SHOOT = 10;	//number of shots allowed out
 	bool keys[] = { false, false, false, false, false };
 	enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
 
@@ -44,11 +47,16 @@ int main(int argc, char **argv){
 	bool gameOver = false;
 	bool levelOver = false;
 	bool render = true;
-	int level = 1;	//FIXME? level starts at 1 not 0
+	int level = 1;	//level starts at 1 not 0
 	int score = 0;
+	int lvl_defeat1 = 0;		//the number of starmen defeated this level
+	int lvl_defeat2 = 0;		//the number of deluxe beaten this level
+	int lvl_need1 = NUM_BAD1 * 2;	//starmen needed to be defeated this level
+	int lvl_need2 = NUM_BAD2 * 2;	//deluxe needed to be defeated this level
 	int ani_dir = 5; //the direction the character should be facing
 	int xOff = 0;	//used in determining if map should scroll
 	int yOff = 0;	//used in determining if map should scroll
+	int count = 0;	//used to see when to shoot again
 
 	//Allegro Variables
    ALLEGRO_DISPLAY *display = NULL;
@@ -62,7 +70,7 @@ int main(int argc, char **argv){
       return -1;
    }
  
-   display = al_create_display(WIDTH, HEIGHT);
+   display = al_create_display(WIDTH, TRUE_HEIGHT);
    if(!display) {
       fprintf(stderr, "failed to create display!\n");
       return -1;
@@ -78,11 +86,11 @@ int main(int argc, char **argv){
    }
 
 
-   //Player & Enemy Variables
+   //Player, Enemy, Attack Variables
    Player hero("wow.wav");	//Ness
-   Enemy starman[10];	//starman
-   Enemy deluxe;	//starman deluxe	FIXME multiple of these
-
+   Enemy starman[NUM_BAD1];	//starman
+   //Enemy deluxe[NUM_BAD2];	//starman deluxe	FIXME multiple of these
+   Attack shoot[NUM_SHOOT];	//number 
 
    //addon init
    al_install_keyboard();
@@ -111,6 +119,8 @@ int main(int argc, char **argv){
    }
    //deluxe.init(WIDTH, HEIGHT, 3, 50, 70, 2, 2, "starman_deluxe_sheet.png", "enemydie.wav");	//TODO init this
 
+
+
    if (MapLoad("area1.FMP", 1))
 	   return -5;
 
@@ -134,14 +144,28 @@ int main(int argc, char **argv){
    //background music is outside while loop so it doesn't reset
 
    //DEBUG
-   starman[0].setLive(true);
+   /*starman[0].setLive(true);
    starman[0].setX(50);
    starman[0].setY(50);
-   starman[0].DrawSprites(starman[0].getX(), starman[0].getY());
+   starman[0].DrawSprites(starman[0].getX(), starman[0].getY());*/
    //DEBUG end
 
 
    while (!gameOver) {
+	   if (levelOver) {
+		   level++;
+		   int lvl_defeat1 = 0;
+		   int lvl_defeat2 = 0;
+		   lvl_need1 = NUM_BAD1 * 2 * (level / 2 );
+		   lvl_need2 = NUM_BAD2 * 2 * (level / 2);
+		   hero.setX(WIDTH / 2);
+		   hero.setY(HEIGHT / 2);
+		   hero.DrawSprites(WIDTH / 2, HEIGHT / 2);
+		   //TODO draw status
+		   al_flip_display();
+		   levelOver = false;
+		   al_rest(3.0);
+	   }
 	   ALLEGRO_EVENT ev;
 	   al_wait_for_event(event_queue, &ev);
 	   if (ev.type == ALLEGRO_EVENT_TIMER)
@@ -190,8 +214,17 @@ int main(int argc, char **argv){
 			   starman[i].CollideHero(hero, hero.getHero(), xOff, yOff);
 		   }
 
+		   //TODO spawn attack
 		   if (keys[SPACE]) {
-			   //TODO spawn attack
+			   //FIXME
+			   if (count % 10 == 0) {
+				   for (int i = 0; i < NUM_SHOOT; i++) {
+					   if (shoot[i].getLive() == false) {
+						   shoot[i].FireAttack(hero, ani_dir, hero.getHero().getX(), hero.getHero().getY());
+						   break;
+					   }
+				   }
+			   }
 		   }
 
 		   render = true;
@@ -290,7 +323,7 @@ int main(int argc, char **argv){
 		   //draw the background tiles
 		   MapDrawBG(xOff, yOff, 0, 0, WIDTH, HEIGHT);
 
-		   //draw foreground tiles
+		   //draw foreground tiles and hero
 		   MapDrawFG(xOff, yOff, 0, 0, WIDTH, HEIGHT, 0);
 		   hero.DrawSprites(xOff, yOff);
 
@@ -300,13 +333,18 @@ int main(int argc, char **argv){
 				   starman[i].DrawSprites(xOff, yOff);
 			   }
 		   }
+
+		   //Draws attacks
+		   for (int i = 0; i < NUM_SHOOT; i++) {
+			   if (shoot[i].getLive() == true) {
+				   shoot[i].DrawAttack(xOff, yOff);
+			   }
+		   }
 		   
-		   //levelOver = hero.Collision();
 		   if (levelOver && level >= 3) {	//checks if game is over
 			   gameOver = true;
 		   }
-		   //counter = al_get_time() - start_time - 1;	//-1 to offset the loading time
-
+		   count++;
 		   /*drawStatus(font, counter, WIDTH, HEIGHT);*/
 		   al_flip_display();
 		   al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -348,7 +386,11 @@ bool endValue(int x, int y)
 }
 
 void drawStatus(ALLEGRO_FONT* font, int counter, int width, int height) {
-	//TODO make it have health bar, time bar, etc.
+	//TODO make it have 
+	//lives bar
+	//number of enemies defeated
+	//number of enemies left
+	//level
 	al_draw_filled_rectangle(width - 76, 0, width, 20, al_map_rgb(255, 255, 255));
 	al_draw_textf(font, al_map_rgb(0, 0, 0), width - 75, 0, 0, "Time: %i", counter);
 }
