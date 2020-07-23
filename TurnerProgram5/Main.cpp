@@ -4,6 +4,11 @@ Nick Turner
 CPSC 440J
 Turner Program 5
 */
+#include "SpriteSheet.h"
+#include "Enemy.h"
+#include "Player.h"
+#include "mappy_A5.h"
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -14,10 +19,6 @@ Turner Program 5
 
 #include <stdio.h>
 #include <iostream>
-#include "SpriteSheet.h"
-#include "Enemy.h"
-#include "Player.h"
-#include "mappy_A5.h"
 
 using namespace std;
  
@@ -42,6 +43,7 @@ int main(int argc, char **argv){
 	bool levelOver = false;
 	bool render = true;
 	int level = 1;	//FIXME? level starts at 1 not 0
+	int score = 0;
 	int ani_dir = 5; //the direction the character should be facing
 	int xOff = 0;	//used in determining if map should scroll
 	int yOff = 0;	//used in determining if map should scroll
@@ -103,7 +105,7 @@ int main(int argc, char **argv){
    starman.init(WIDTH, HEIGHT, 1, 50, 70, 3, 3, "starman_sheet.png", "enemydie.wav");
    //deluxe.init(WIDTH, HEIGHT, 3, 50, 70, 2, 2, "starman_deluxe_sheet.png", "enemydie.wav");	//TODO init this
 
-   if (MapLoad("temp.FMP", 1))
+   if (MapLoad("area1.FMP", 1))
 	   return -5;
 
    event_queue = al_create_event_queue();
@@ -157,10 +159,12 @@ int main(int argc, char **argv){
 				   ani_dir = 2;
 			   hero.movePlayer(WIDTH, HEIGHT, 2, ani_dir);
 		   }
-		   else
+		   else {
 			   hero.movePlayer(WIDTH, HEIGHT, 5, ani_dir);
-		   if (hero.Collision()) {	//FIXME ???
-		   }
+			}
+		   /*if (hero.Collision()) {	//FIXME ???
+		   }*/
+		   render = true;
 		   ani_dir = 5;
 
 	   }
@@ -242,9 +246,9 @@ int main(int argc, char **argv){
 		   MapDrawFG(xOff, yOff, 0, 0, WIDTH, HEIGHT, 0);
 		   hero.DrawSprites(xOff, yOff);
 		   if (starman.getLive()) {	//DEBUG
-			   starman.DrawSprites(WIDTH / 2, HEIGHT / 2);
+			   starman.DrawSprites(450, 240);
 		   }
-		   levelOver = hero.Collision();
+		   //levelOver = hero.Collision();
 		   if (levelOver && level >= 3) {	//checks if game is over
 			   gameOver = true;
 		   }

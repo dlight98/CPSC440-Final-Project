@@ -4,10 +4,11 @@ Nick Turner
 CPSC 440J
 Turner Program 5
 */
+#include "Enemy.h"
+
 #include <allegro5/allegro.h>
 #include <allegro5\allegro_image.h>
 
-#include "Enemy.h"
 
 Enemy::Enemy() {
 	death = NULL;
@@ -34,7 +35,7 @@ void Enemy::hit() {
 void Enemy::moveEnemy(int width, int height, int dir, int ani_dir) {
 	
 	//should move automatically towards Ness
-	badGuy.UpdateSprites(width, height, dir, ani_dir);
+	badGuy.UpdateSprites(width, height, 5, 5);	//TEMP
 
 }
 

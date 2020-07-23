@@ -4,10 +4,10 @@ Nick Turner
 CPSC 440J
 Turner Program 5
 */
+#include "Player.h"
+
 #include <allegro5/allegro.h>
 #include <allegro5\allegro_image.h>
-
-#include "Player.h"
 
 Player::Player() {
 	ouch = NULL;
@@ -26,6 +26,8 @@ void Player::init(int width, int height, char* file_name, char* samp) {
 
 void Player::movePlayer(int width, int height, int dir, int ani_dir) {
 	hero.UpdateSprites(width, height, dir, ani_dir);
+	dir = ani_dir;	//use dir with which way the attack fires
+					//FIXME might want to use dir instead?
 }
 
 

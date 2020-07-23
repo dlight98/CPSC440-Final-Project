@@ -6,11 +6,11 @@ Turner Program 5
 */
 #ifndef PLAYER_H
 #define PLAYER_H
+#include "SpriteSheet.h"
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-
-#include "SpriteSheet.h"
 
 class Player {
 
@@ -35,6 +35,7 @@ public:
 private:
 	Sprite hero;
 	ALLEGRO_SAMPLE* ouch;
+	int dir; //dir 0 = down, 1 = left, 2 = right, 3 = left
 };
 
 #endif
