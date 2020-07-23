@@ -15,21 +15,18 @@ Attack::Attack() {
 	x = 350;
 	y = 400;
 	live = false;
-	speed = 5;
+	speed = 3;
 	//FIXME change angles to dir
 	radian_angle = 257.6;
 	orig_angle = 257.6;
 
-	//image = NULL;
-	//hit = NULL;
-
-	hit = al_load_sample("fire1.wav");
-	//image = resize_bitmap("PK_fire_air.png", 32, 32);
+	image = NULL;
+	fire = al_load_sample("fire1.wav");
 }
 
 Attack::~Attack() {
 	//al_destroy_bitmap(image);
-	al_destroy_sample(hit);
+	al_destroy_sample(fire);
 }
 
 void Attack::DrawAttack(int xoff, int yoff) {
@@ -42,6 +39,7 @@ void Attack::DrawAttack(int xoff, int yoff) {
 
 void Attack::FireAttack(Player player, int dire, int startx, int starty) {
 	if (!live) {
+		al_play_sample(fire, .25, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 		image = al_load_bitmap("PK_fire_air.png");
 		dir = dire;
 		x = player.getX();
@@ -52,16 +50,16 @@ void Attack::FireAttack(Player player, int dire, int startx, int starty) {
 void Attack::UpdateAttack(int w, int h) {
 	if (live) {
 		if (dir == 0) {
-			y += 2;
+			y += speed;
 		}
 		else if (dir == 1) {
-			x -= 2;
+			x -= speed;
 		}
 		else if (dir == 2) {
-			x += 2;
+			x += speed;
 		}
 		else if (dir == 3) {
-			y -= 2;
+			y -= speed;
 		}
 
 		if (y <= 0 || x <= 0 || y >= h || x >= w) {

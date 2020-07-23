@@ -35,7 +35,7 @@ private:
 	float orig_angle; //the angle it was fired from
 	int dir;	//
 	ALLEGRO_BITMAP* image;
-	ALLEGRO_SAMPLE* hit;
+	ALLEGRO_SAMPLE* fire;
 };
 
 #endif

@@ -32,7 +32,6 @@ void Enemy::hit() {
 	health -= 1;
 }
 
-//FIXME
 void Enemy::moveEnemy(int width, int height, int xp, int yp) {
 	//xp and yp are the players
 	//x and y coordinates
@@ -74,7 +73,6 @@ void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset) {
 			//TODO remove player life
 			player.playOuch();
 			//al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
-			//badGuy.EnemyDie(xoffset, yoffset, live);
 			health = 0;
 		}
 		

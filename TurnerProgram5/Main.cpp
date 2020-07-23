@@ -101,7 +101,7 @@ int main(int argc, char **argv){
    al_init_ttf_addon();
  
    //TODO initialize the font
-   //ALLEGRO_FONT* font = al_load_font("college.ttf", 18, 0);
+   ALLEGRO_FONT* font = al_load_font("Bleeding_Cowboys.ttf", 18, 0);
 
    bgm = al_load_sample("battle against a clueless foe.wav");
    //this sound is taken royalty-free from the unused 
@@ -201,7 +201,7 @@ int main(int argc, char **argv){
 		   /*if (hero.Collision()) {	//FIXME ???
 		   }*/
 
-			//TODO update attack
+			//update attack
 		   for (int i = 0; i < NUM_SHOOT; i++) {
 			   if (shoot[i].getLive() == true) {
 				   shoot[i].UpdateAttack(WIDTH, HEIGHT);
@@ -210,9 +210,9 @@ int main(int argc, char **argv){
 
 		   //TODO spawn enemies
 
-		   //TODO update enemies
+		   //update enemies
 		   for (int i = 0; i < NUM_BAD1; i++) {	//Update Penguins Dropping
-			   starman[i].moveEnemy(WIDTH, HEIGHT, hero.getHero().getX(), hero.getHero().getY()); //TEMP FIXME
+			   starman[i].moveEnemy(WIDTH, HEIGHT, hero.getHero().getX(), hero.getHero().getY());
 		   }
 
 		   //TODO check attack collision with enemy
@@ -222,10 +222,9 @@ int main(int argc, char **argv){
 			   starman[i].CollideHero(hero, hero.getHero(), xOff, yOff);
 		   }
 
-		   //TODO spawn attack
+		   //spawn attack
 		   if (keys[SPACE]) {
-			   //FIXME
-			   if (count % 10 == 0) {
+			   if (count % 20 == 0) {
 				   for (int i = 0; i < NUM_SHOOT; i++) {
 					   if (shoot[i].getLive() == false) {
 						   shoot[i].FireAttack(hero, dirs, hero.getHero().getX(), hero.getHero().getY());
@@ -301,6 +300,12 @@ int main(int argc, char **argv){
 			   break;
 		   case ALLEGRO_KEY_SPACE:
 			   keys[SPACE] = false;
+			   for (int i = 0; i < NUM_SHOOT; i++) {
+				   if (shoot[i].getLive() == false) {
+					   shoot[i].FireAttack(hero, dirs, hero.getHero().getX(), hero.getHero().getY());
+					   break;
+				   }
+			   }
 			   break;
 		   case ALLEGRO_KEY_E:	//DEBUG printed
 			   starman[0].printDebug(0);

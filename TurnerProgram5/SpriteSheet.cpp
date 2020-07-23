@@ -53,8 +53,8 @@ void Sprite::InitEnemySprites(int width, int height, int fw, int fh, int max, in
 	frameDelay = 3;
 	frameWidth = fw;	//normally 50
 	frameHeight = fh;	//normally 70
-	cout << "frameWidth: " << frameWidth << endl;	//DEBUG
-	cout << "frameHeight: " << frameHeight << endl;	//DEBUG
+	//cout << "frameWidth: " << frameWidth << endl;	//DEBUG
+	//cout << "frameHeight: " << frameHeight << endl;	//DEBUG
 	animationColumns = col;
 	animationRows = 1;
 	//animationDirection = 2;
