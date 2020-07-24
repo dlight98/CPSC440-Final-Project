@@ -146,14 +146,6 @@ int main(int argc, char **argv){
    al_play_sample(bgm, 1, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);	
    //background music is outside while loop so it doesn't reset
 
-   //DEBUG
-   /*starman[0].setLive(true);
-   starman[0].setX(50);
-   starman[0].setY(50);
-   starman[0].DrawSprites(starman[0].getX(), starman[0].getY());*/
-   //DEBUG end
-
-
    while (!gameOver) {
 
 	   if (levelOver) {

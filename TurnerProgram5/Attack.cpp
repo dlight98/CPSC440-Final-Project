@@ -85,7 +85,7 @@ void Attack::CollideAttack(Enemy enemy[], int cSize, int& score, int &num_beat) 
 				((ey < hy && eby > hy) || (eby > hby && ey < hby)
 					))
 			{
-				cout << "hit enemy" << endl;	//DEBUG
+				//cout << "hit enemy" << endl;	//DEBUG
 				if (enemy[i].getHealth() != 0 && enemy[i].getLive() == true) {
 					enemy[i].hit();
 					live = false;
