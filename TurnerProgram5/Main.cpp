@@ -21,6 +21,19 @@ Turner Program 5
 #include <stdio.h>
 #include <iostream>
 
+
+
+/*
+HOW TO PLAY
+arrow keys move
+space to shoot
+the goal is to shoot the starmen approaching
+each level increases the number to be defeated by 10
+*/
+
+
+
+
 using namespace std;
  
 int collided(int x, int y);  //Tile Collision
