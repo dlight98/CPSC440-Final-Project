@@ -25,7 +25,7 @@ using namespace std;
  
 int collided(int x, int y);  //Tile Collision
 bool endValue(int x, int y); //End Block with the User Value = 8
-void drawStatus(ALLEGRO_FONT* font, int counter, int width, int height);
+void drawStatus(ALLEGRO_FONT* font, int level, int remaining, int width, int height);
 void drawIntro();
 void drawEnd();
 
@@ -236,10 +236,6 @@ int main(int argc, char **argv){
 						   yspot = (rand() % 26) + 224 + 32;
 					   }
 					   if (xspot != -1) {
-						   /*starman[i].setLive(true);
-						   starman[i].setX(xspot);
-						   starman[i].setY(yspot);
-						   starman[i].DrawSprites(starman[i].getX(), starman[i].getY());*/
 						   starman[i].startEnemy(xspot, yspot);
 					   }
 					   break;
@@ -248,7 +244,7 @@ int main(int argc, char **argv){
 		   }
 
 		   //update enemies
-		   for (int i = 0; i < NUM_BAD1; i++) {	//Update Penguins Dropping
+		   for (int i = 0; i < NUM_BAD1; i++) {
 			   starman[i].moveEnemy(WIDTH, HEIGHT, hero.getHero().getX(), hero.getHero().getY());
 		   }
 
@@ -402,7 +398,7 @@ int main(int argc, char **argv){
 			   gameOver = true;
 		   }
 		   count++;
-		   drawStatus(font, level, WIDTH, TRUE_HEIGHT);
+		   drawStatus(font, level, lvl_need1-lvl_defeat1, WIDTH, TRUE_HEIGHT);
 		   al_flip_display();
 		   al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -442,7 +438,7 @@ bool endValue(int x, int y)
 		return false;
 }
 
-void drawStatus(ALLEGRO_FONT* font, int level, int width, int height) {
+void drawStatus(ALLEGRO_FONT* font, int level, int remaining, int width, int height) {
 	//TODO make it have 
 	//lives bar
 	//number of enemies defeated
@@ -450,7 +446,7 @@ void drawStatus(ALLEGRO_FONT* font, int level, int width, int height) {
 	//level
 	
 	al_draw_textf(font, al_map_rgb(255, 255, 255), 75, height - 75, 0, "Level: %i", level);
-
+	al_draw_textf(font, al_map_rgb(255, 255, 255), width - 100, height - 75, 0, "Left: %i", remaining);
 	//al_draw_filled_rectangle(width - 76, 0, width, 20, al_map_rgb(255, 255, 255));
 	//al_draw_textf(font, al_map_rgb(0, 0, 0), width - 75, 0, 0, "Time: %i", counter);
 
