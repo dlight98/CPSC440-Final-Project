@@ -59,7 +59,7 @@ void Enemy::moveEnemy(int width, int height, int xp, int yp) {
 
 }
 
-void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset) {
+void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset, int &life) {
 	if (live && health > 0)
 	{
 		int ex = badGuy.getX();	//enemy x
@@ -76,7 +76,7 @@ void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset) {
 			((ey < hy && eby > hy) || (eby > hby && ey < hby)
 			))
 		{
-			//TODO remove player life
+			life--;
 			player.playOuch();
 			//al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			health = 0;

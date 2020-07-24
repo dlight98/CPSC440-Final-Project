@@ -241,7 +241,7 @@ bool Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int healt
 		}
 		
 	}
-
+	
 	boundx = x + frameWidth; //*.9;	//this updates the bound boxes
 	boundy = y + frameHeight;// *.9;	//to check for collision
 	return true;

@@ -22,7 +22,7 @@ public:
 	void hit();
 	bool getLive() { return live; }
 	void setLive(bool l) { live = l; }
-	void CollideHero(Player player, Sprite hero, int xoffset, int yoffset);
+	void CollideHero(Player player, Sprite hero, int xoffset, int yoffset, int& life);
 
 	void startEnemy(int sx, int sy);
 	void moveEnemy(int width, int height, int xp, int yp);

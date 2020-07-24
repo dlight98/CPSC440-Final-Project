@@ -37,6 +37,7 @@ int main(int argc, char **argv){
 	const int TRUE_HEIGHT = 580;	//gives space for the status bar
 	const int TIME_PER_LEVEL = 60;	//seconds
 	const int FPS = 60;
+	const int MAX_LIVES = 3;
 	const int NUM_BAD1 = 5;	//the weaker enemy starman
 	const int NUM_BAD2 = 2;		//the stronger enemy starman deluxe
 	const int NUM_SHOOT = 10;	//number of shots allowed out
@@ -58,6 +59,7 @@ int main(int argc, char **argv){
 	int xOff = 0;	//used in determining if map should scroll
 	int yOff = 0;	//used in determining if map should scroll
 	int count = 0;	//used to see when to shoot again
+	int h_lives = MAX_LIVES;	//lives for player
 
 	//Allegro Variables
    ALLEGRO_DISPLAY *display = NULL;
@@ -154,18 +156,23 @@ int main(int argc, char **argv){
 
    while (!gameOver) {
 	   if (levelOver) {
+		   al_clear_to_color(al_map_rgb(0, 0, 0));
 		   level++;
-		   int lvl_defeat1 = 0;
-		   int lvl_defeat2 = 0;
+		   lvl_defeat1 = 0;
+		   //lvl_defeat2 = 0;
 		   lvl_need1 = (NUM_BAD1 * 2) * (level / 2 );
-		   lvl_need2 = (NUM_BAD2 * 2) * (level / 2);
+		   //lvl_need2 = (NUM_BAD2 * 2) * (level / 2);
+		   MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
 		   hero.setX(WIDTH / 2);
 		   hero.setY(HEIGHT / 2);
 		   hero.DrawSprites(WIDTH / 2, HEIGHT / 2);
-		   //TODO draw status
+		   for (int i = 0; i < NUM_BAD1; i++) {
+			   starman[i].setLive(false);
+			   starman[i].setHealth(0);
+		   }
 		   al_flip_display();
 		   levelOver = false;
-		   al_rest(3.0);
+		   //al_rest(3.0);
 	   }
 	   ALLEGRO_EVENT ev;
 	   al_wait_for_event(event_queue, &ev);
@@ -198,8 +205,6 @@ int main(int argc, char **argv){
 			}
 		   if(ani_dir != 5)
 			   dirs = ani_dir;	//this determines the way the attacks fly
-		   /*if (hero.Collision()) {	//FIXME ???
-		   }*/
 
 			//update attack
 		   for (int i = 0; i < NUM_SHOOT; i++) {
@@ -208,7 +213,7 @@ int main(int argc, char **argv){
 			   }
 		   }
 
-		   //TODO spawn enemies
+		   //spawn enemies
 		   for (int i = 0; i < NUM_BAD1; i++) {
 			   if (count % 60 == 0 && lvl_defeat1 < lvl_need1) {	//FIXME should be &&
 				   if (starman[i].getLive() == false || starman[i].getHealth() <= 0) {
@@ -255,7 +260,7 @@ int main(int argc, char **argv){
 
 		   //check BOTH enemy collision with hero
 		   for (int i = 0; i < NUM_BAD1; i++) {
-			   starman[i].CollideHero(hero, hero.getHero(), xOff, yOff);
+			   starman[i].CollideHero(hero, hero.getHero(), xOff, yOff, h_lives);
 		   }
 
 		   //spawn attack
@@ -393,8 +398,7 @@ int main(int argc, char **argv){
 				   shoot[i].DrawAttack(xOff, yOff);
 			   }
 		   }
-		   
-		   if (levelOver && level >= 3) {	//checks if game is over
+		   if (h_lives == 0) {
 			   gameOver = true;
 		   }
 		   count++;
