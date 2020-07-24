@@ -67,7 +67,7 @@ void Attack::UpdateAttack(int w, int h) {
 		}
 	}
 }
-void Attack::CollideAttack(Enemy enemy[], int cSize, int& score) {
+void Attack::CollideAttack(Enemy enemy[], int cSize, int& score, int &num_beat) {
 	if (live) {
 		for (int i = 0; i < cSize; i++) {
 			
@@ -84,23 +84,14 @@ void Attack::CollideAttack(Enemy enemy[], int cSize, int& score) {
 				(ex < hbx && ebx > hbx) || (ex > hbx && ebx < hbx)) &&
 				((ey < hy && eby > hy) || (eby > hby && ey < hby)
 					))
-			/*if (x > (enemy[i].getBad().getX() - enemy[i].getBad().getBoundX()) &&
-				x < (enemy[i].getBad().getX() + enemy[i].getBad().getBoundX()) &&
-				y >(enemy[i].getBad().getY() - enemy[i].getBad().getBoundY()) &&
-				y < (enemy[i].getBad().getY() + enemy[i].getBad().getBoundY())
-				&& enemy[i].getHealth() != 0)/**/
-			/*if (hx > (enemy[i].getBad().getX() - enemy[i].getBad().getBoundX()) &&
-				hx < (enemy[i].getBad().getX() + enemy[i].getBad().getBoundX()) &&
-				hy >(enemy[i].getBad().getY() - enemy[i].getBad().getBoundY()) &&
-				hy < (enemy[i].getBad().getY() + enemy[i].getBad().getBoundY())
-				&& enemy[i].getHealth() != 0)/**/
 			{
-				cout << "hit enemy" << endl;
+				cout << "hit enemy" << endl;	//DEBUG
 				if (enemy[i].getHealth() != 0) {
 					enemy[i].hit();
 					live = false;
+					num_beat++;
+					score++;
 				}
-				score++;
 			}
 		}
 	}

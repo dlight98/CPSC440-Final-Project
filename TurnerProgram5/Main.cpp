@@ -145,10 +145,10 @@ int main(int argc, char **argv){
    //background music is outside while loop so it doesn't reset
 
    //DEBUG
-   starman[0].setLive(true);
+   /*starman[0].setLive(true);
    starman[0].setX(50);
    starman[0].setY(50);
-   starman[0].DrawSprites(starman[0].getX(), starman[0].getY());
+   starman[0].DrawSprites(starman[0].getX(), starman[0].getY());*/
    //DEBUG end
 
 
@@ -157,8 +157,8 @@ int main(int argc, char **argv){
 		   level++;
 		   int lvl_defeat1 = 0;
 		   int lvl_defeat2 = 0;
-		   lvl_need1 = NUM_BAD1 * 2 * (level / 2 );
-		   lvl_need2 = NUM_BAD2 * 2 * (level / 2);
+		   lvl_need1 = (NUM_BAD1 * 2) * (level / 2 );
+		   lvl_need2 = (NUM_BAD2 * 2) * (level / 2);
 		   hero.setX(WIDTH / 2);
 		   hero.setY(HEIGHT / 2);
 		   hero.DrawSprites(WIDTH / 2, HEIGHT / 2);
@@ -209,18 +209,52 @@ int main(int argc, char **argv){
 		   }
 
 		   //TODO spawn enemies
+		   for (int i = 0; i < NUM_BAD1; i++) {
+			   if (starman[i].getLive() == false) {
+				   int num = rand() % 4;	//0 = top, 1 = bottom, 2 = left, 3 = right
+				   int xspot = -1;
+				   int yspot = -1;
+				   if (num == 0) {
+					   //top
+					   xspot = (rand() % 140) + 384 + 32;
+					   yspot = 70;
+				   }
+				   else if (num == 1) {
+					   //bottom
+					   xspot = (rand() % 140) + 384 + 32;
+					   yspot = HEIGHT - 100;
+				   }
+				   else if (num == 2) {
+					   //left
+					   xspot = 50;
+					   yspot = (rand() % 26) + 224 +32;
+				   }
+				   else if (num == 3) {
+					   //right
+					   xspot = WIDTH - 50;
+					   yspot = (rand() % 26) + 224 + 32;
+				   }
+				   if (xspot != -1) {
+					   starman[i].setLive(true);
+					   starman[i].setX(xspot);
+					   starman[i].setY(yspot);
+					   starman[i].DrawSprites(starman[i].getX(), starman[i].getY());
+					}
+				   break;
+			   }
+		   }
 
 		   //update enemies
 		   for (int i = 0; i < NUM_BAD1; i++) {	//Update Penguins Dropping
 			   starman[i].moveEnemy(WIDTH, HEIGHT, hero.getHero().getX(), hero.getHero().getY());
 		   }
 
-		   //TODO check attack collision with enemy
+		   //check attack collision with enemy
 		   for (int i = 0; i < NUM_BAD1; i++) {
-			   shoot[i].CollideAttack(starman, lvl_need1, score);
+			   shoot[i].CollideAttack(starman, lvl_need1, score, lvl_defeat1);
 		   }
 
-		   //TODO check BOTH enemy collision with hero
+		   //check BOTH enemy collision with hero
 		   for (int i = 0; i < NUM_BAD1; i++) {
 			   starman[i].CollideHero(hero, hero.getHero(), xOff, yOff);
 		   }
@@ -235,6 +269,10 @@ int main(int argc, char **argv){
 					   }
 				   }
 			   }
+		   }
+
+		   if (lvl_defeat1 == lvl_need1) {
+			   levelOver = true;
 		   }
 
 		   render = true;
