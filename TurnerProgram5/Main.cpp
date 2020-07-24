@@ -145,10 +145,10 @@ int main(int argc, char **argv){
    //background music is outside while loop so it doesn't reset
 
    //DEBUG
-   /*starman[0].setLive(true);
+   starman[0].setLive(true);
    starman[0].setX(50);
    starman[0].setY(50);
-   starman[0].DrawSprites(starman[0].getX(), starman[0].getY());*/
+   starman[0].DrawSprites(starman[0].getX(), starman[0].getY());
    //DEBUG end
 
 
@@ -216,6 +216,9 @@ int main(int argc, char **argv){
 		   }
 
 		   //TODO check attack collision with enemy
+		   for (int i = 0; i < NUM_BAD1; i++) {
+			   shoot[i].CollideAttack(starman, lvl_need1, score);
+		   }
 
 		   //TODO check BOTH enemy collision with hero
 		   for (int i = 0; i < NUM_BAD1; i++) {

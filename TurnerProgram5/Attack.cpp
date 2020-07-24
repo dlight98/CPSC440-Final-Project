@@ -68,7 +68,42 @@ void Attack::UpdateAttack(int w, int h) {
 	}
 }
 void Attack::CollideAttack(Enemy enemy[], int cSize, int& score) {
+	if (live) {
+		for (int i = 0; i < cSize; i++) {
+			
+			int ex = enemy[i].getBad().getX();	//enemy x
+			int ebx = enemy[i].getBad().getBoundX(); //enemy bound x
+			int ey = enemy[i].getBad().getY();
+			int eby = enemy[i].getBad().getBoundY();
+			int hx = x;
+			int hy = y;
+			int hbx = x + 32;	//the frame width & height is 32
+			int hby = y + 32;
 
+			if (((ex < hx && ebx > hx) || (ex > hx && ebx < hx) ||
+				(ex < hbx && ebx > hbx) || (ex > hbx && ebx < hbx)) &&
+				((ey < hy && eby > hy) || (eby > hby && ey < hby)
+					))
+			/*if (x > (enemy[i].getBad().getX() - enemy[i].getBad().getBoundX()) &&
+				x < (enemy[i].getBad().getX() + enemy[i].getBad().getBoundX()) &&
+				y >(enemy[i].getBad().getY() - enemy[i].getBad().getBoundY()) &&
+				y < (enemy[i].getBad().getY() + enemy[i].getBad().getBoundY())
+				&& enemy[i].getHealth() != 0)/**/
+			/*if (hx > (enemy[i].getBad().getX() - enemy[i].getBad().getBoundX()) &&
+				hx < (enemy[i].getBad().getX() + enemy[i].getBad().getBoundX()) &&
+				hy >(enemy[i].getBad().getY() - enemy[i].getBad().getBoundY()) &&
+				hy < (enemy[i].getBad().getY() + enemy[i].getBad().getBoundY())
+				&& enemy[i].getHealth() != 0)/**/
+			{
+				cout << "hit enemy" << endl;
+				if (enemy[i].getHealth() != 0) {
+					enemy[i].hit();
+					live = false;
+				}
+				score++;
+			}
+		}
+	}
 }
 
 ALLEGRO_BITMAP* Attack::debugDraw(int gx, int gy) {	//DEBUG for seeing that it draws correctly

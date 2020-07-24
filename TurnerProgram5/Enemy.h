@@ -28,7 +28,9 @@ public:
 	void DrawSprites(int xoffset, int yoffset);
 	bool Collision();
 	void printDebug(int num);
-
+	void Die();
+	int getHealth() { return health; }
+	void setHealth(int h) { health = h; }
 	//the following are used in getting and setting
 	//information related to the enemy sprite
 	int getX();

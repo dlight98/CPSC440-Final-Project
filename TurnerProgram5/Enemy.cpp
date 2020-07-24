@@ -29,7 +29,12 @@ void Enemy::init(int width, int height, int max_health, int fw, int fh, int max,
 }
 
 void Enemy::hit() {
-	health -= 1;
+	if (health > 0) {
+		health -= 1;
+	}
+	else if(health == 0) {
+		al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+	}
 }
 
 void Enemy::moveEnemy(int width, int height, int xp, int yp) {
@@ -54,17 +59,6 @@ void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset) {
 		int hy = hero.getY();
 		int hby = hero.getBoundY();
 		
-		/*if (ex - ebx < hx + hbx &&
-			ex + ebx > hx - hbx &&
-			ey - eby < hy + hby &&
-			ey + eby > hy - hby)*/
-		/*if ((ex < hbx || ebx < hbx)&&
-			(ex > hx || ebx > hx) && 
-			(ey < hby || eby < hby)&&
-			(ey > hy || eby > hby)
-			)*/
-		/*if (((ex < hx && ebx > hx) || (ex > hbx && ebx < hbx) &&
-			((ey < hy && eby > hy) || (eby > hby && ey < hby)))*/
 		if (((ex < hx && ebx > hx) || (ex > hx && ebx < hx) ||
 			(ex < hbx && ebx > hbx)|| (ex > hbx && ebx < hbx)) &&
 			((ey < hy && eby > hy) || (eby > hby && ey < hby)
@@ -77,6 +71,11 @@ void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset) {
 		}
 		
 	}
+}
+
+void Enemy::Die() {
+	//TODO
+
 }
 
 void Enemy::DrawSprites(int xoffset, int yoffset) {
