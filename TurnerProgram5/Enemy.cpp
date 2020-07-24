@@ -90,7 +90,6 @@ void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset, in
 		{
 			life--;
 			player.playOuch();
-			//al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 			health = 0;
 		}
 		
@@ -98,7 +97,7 @@ void Enemy::CollideHero(Player player, Sprite hero, int xoffset, int yoffset, in
 }
 
 void Enemy::Die() {
-	//TODO
+	al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
 }
 
