@@ -24,6 +24,7 @@ public:
 	void setLive(bool l) { live = l; }
 	void CollideHero(Player player, Sprite hero, int xoffset, int yoffset);
 
+	void startEnemy(int sx, int sy);
 	void moveEnemy(int width, int height, int xp, int yp);
 	void DrawSprites(int xoffset, int yoffset);
 	bool Collision();
@@ -43,6 +44,7 @@ private:
 	Sprite badGuy;
 	ALLEGRO_SAMPLE* death;
 	int health;
+	int MAX_HEALTH;
 	int death_loop;
 	bool live;
 };

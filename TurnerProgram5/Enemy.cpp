@@ -19,13 +19,21 @@ Enemy::Enemy() {
 
 Enemy::~Enemy() {
 	badGuy.~Sprite();
-	al_destroy_sample(death);
+	//al_destroy_sample(death);
 }
 
 void Enemy::init(int width, int height, int max_health, int fw, int fh, int max, int col, char* file_name, char* samp) {
 	badGuy.InitEnemySprites(width, height, fw, fh, max, col, file_name, al_map_rgb(147, 187, 236));
 	death = al_load_sample(samp);
-	health = max_health;
+	MAX_HEALTH = max_health;
+	//health = max_health;
+}
+
+void Enemy::startEnemy(int sx, int sy) {
+	health = MAX_HEALTH;
+	live = true;
+	badGuy.setX(sx);
+	badGuy.setY(sy);
 }
 
 void Enemy::hit() {
@@ -33,6 +41,7 @@ void Enemy::hit() {
 		health -= 1;
 	}
 	else if(health == 0) {
+		
 		al_play_sample(death, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 }
@@ -42,7 +51,10 @@ void Enemy::moveEnemy(int width, int height, int xp, int yp) {
 	//x and y coordinates
 	if (live) {
 		//should move automatically towards Ness
-		badGuy.UpdateEnemySprites(width, height, xp, yp, health, death_loop, live);	//TEMP
+		live = badGuy.UpdateEnemySprites(width, height, xp, yp, health, death_loop, live);	//TEMP
+	}
+	else {
+		this->~Enemy();
 	}
 
 }

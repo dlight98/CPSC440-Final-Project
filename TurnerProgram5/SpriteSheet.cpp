@@ -166,7 +166,7 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 
 }
 
-void Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int health, int &loop, bool &live) {
+bool Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int health, int &loop, bool &live) {
 	int oldx = x;
 	int oldy = y;
 
@@ -244,6 +244,7 @@ void Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int healt
 
 	boundx = x + frameWidth; //*.9;	//this updates the bound boxes
 	boundy = y + frameHeight;// *.9;	//to check for collision
+	return true;
 }
 
 
@@ -260,7 +261,14 @@ void Sprite::DrawSprites(int xoffset, int yoffset)
 	int fx = (curFrame % animationColumns) * frameWidth;
 	int fy = (curFrame / animationColumns) * frameHeight;
 
-	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+	int xmove = x - xoffset;
+	int ymove = y - yoffset;
+	if (xmove < 0)
+		xmove = 0;
+	if (ymove < 0)
+		ymove = 0;
+
+	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, xmove, ymove, 0);
 }
 
 void Sprite::DrawEnemySprites(int xoffset, int yoffset)
@@ -268,21 +276,21 @@ void Sprite::DrawEnemySprites(int xoffset, int yoffset)
 	int fx = (curFrame % animationColumns) * frameWidth;
 	int fy = (curFrame / animationColumns) * frameHeight;
 
-	//al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
+	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - xoffset, y - yoffset, 0);
 	
 	
 	
-	al_draw_tinted_scaled_rotated_bitmap_region(
+	/*al_draw_tinted_scaled_rotated_bitmap_region(
 		image,								//bitmap
 		fx, fy, frameWidth, frameHeight,	//source region
 		al_map_rgb(255,255,255),			//tint (white means none)
 		0, 0,								//center of rotation
 		x - xoffset,y - yoffset,			//destination
 		.9, .9,								//scale
-		0,0);								//angle & flags
+		0,0);	*/							//angle & flags
 }
 
-void Sprite::EnemyDie(int xoffset, int yoffset, bool &l) {
+bool Sprite::EnemyDie(int xoffset, int yoffset, bool &l) {
 	curFrame = 0;
 	for (int i = 0; i < 30; i++) {
 		frameCount = 0;
@@ -297,5 +305,5 @@ void Sprite::EnemyDie(int xoffset, int yoffset, bool &l) {
 		}
 		curFrame = 0;
 	}
-	l = false;
+	return true;
 }

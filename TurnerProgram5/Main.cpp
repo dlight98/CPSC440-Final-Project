@@ -210,37 +210,40 @@ int main(int argc, char **argv){
 
 		   //TODO spawn enemies
 		   for (int i = 0; i < NUM_BAD1; i++) {
-			   if (starman[i].getLive() == false) {
-				   int num = rand() % 4;	//0 = top, 1 = bottom, 2 = left, 3 = right
-				   int xspot = -1;
-				   int yspot = -1;
-				   if (num == 0) {
-					   //top
-					   xspot = (rand() % 140) + 384 + 32;
-					   yspot = 70;
+			   if (count % 60 == 0 && lvl_defeat1 < lvl_need1) {	//FIXME should be &&
+				   if (starman[i].getLive() == false || starman[i].getHealth() <= 0) {
+					   int num = rand() % 4;	//0 = top, 1 = bottom, 2 = left, 3 = right
+					   int xspot = -1;
+					   int yspot = -1;
+					   if (num == 0) {
+						   //top
+						   xspot = (rand() % 140) + 384 + 32;
+						   yspot = 75;
+					   }
+					   else if (num == 1) {
+						   //bottom
+						   xspot = (rand() % 140) + 384 + 32;
+						   yspot = HEIGHT - 75;
+					   }
+					   else if (num == 2) {
+						   //left
+						   xspot = 55;
+						   yspot = (rand() % 26) + 224 + 32;
+					   }
+					   else if (num == 3) {
+						   //right
+						   xspot = WIDTH - 55;
+						   yspot = (rand() % 26) + 224 + 32;
+					   }
+					   if (xspot != -1) {
+						   /*starman[i].setLive(true);
+						   starman[i].setX(xspot);
+						   starman[i].setY(yspot);
+						   starman[i].DrawSprites(starman[i].getX(), starman[i].getY());*/
+						   starman[i].startEnemy(xspot, yspot);
+					   }
+					   break;
 				   }
-				   else if (num == 1) {
-					   //bottom
-					   xspot = (rand() % 140) + 384 + 32;
-					   yspot = HEIGHT - 100;
-				   }
-				   else if (num == 2) {
-					   //left
-					   xspot = 50;
-					   yspot = (rand() % 26) + 224 +32;
-				   }
-				   else if (num == 3) {
-					   //right
-					   xspot = WIDTH - 50;
-					   yspot = (rand() % 26) + 224 + 32;
-				   }
-				   if (xspot != -1) {
-					   starman[i].setLive(true);
-					   starman[i].setX(xspot);
-					   starman[i].setY(yspot);
-					   starman[i].DrawSprites(starman[i].getX(), starman[i].getY());
-					}
-				   break;
 			   }
 		   }
 
@@ -399,7 +402,7 @@ int main(int argc, char **argv){
 			   gameOver = true;
 		   }
 		   count++;
-		   /*drawStatus(font, counter, WIDTH, HEIGHT);*/
+		   drawStatus(font, level, WIDTH, TRUE_HEIGHT);
 		   al_flip_display();
 		   al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -439,14 +442,18 @@ bool endValue(int x, int y)
 		return false;
 }
 
-void drawStatus(ALLEGRO_FONT* font, int counter, int width, int height) {
+void drawStatus(ALLEGRO_FONT* font, int level, int width, int height) {
 	//TODO make it have 
 	//lives bar
 	//number of enemies defeated
 	//number of enemies left
 	//level
-	al_draw_filled_rectangle(width - 76, 0, width, 20, al_map_rgb(255, 255, 255));
-	al_draw_textf(font, al_map_rgb(0, 0, 0), width - 75, 0, 0, "Time: %i", counter);
+	
+	al_draw_textf(font, al_map_rgb(255, 255, 255), 75, height - 75, 0, "Level: %i", level);
+
+	//al_draw_filled_rectangle(width - 76, 0, width, 20, al_map_rgb(255, 255, 255));
+	//al_draw_textf(font, al_map_rgb(0, 0, 0), width - 75, 0, 0, "Time: %i", counter);
+
 }
 
 void drawIntro() {
