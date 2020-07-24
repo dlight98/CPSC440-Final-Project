@@ -16,11 +16,12 @@ class Enemy {
 
 public:
 	Enemy();
+	Enemy(char* name, ALLEGRO_COLOR color);
 	~Enemy();
 	Sprite getBad() { return badGuy; }
 	void init(int width, int height, int max_health, int fw, int fh, int max, int col, char* file_name, char* samp);
 	void hit();
-	bool getLive() { return live; }
+	bool getLive();
 	void setLive(bool l) { live = l; }
 	void CollideHero(Player player, Sprite hero, int xoffset, int yoffset, int& life);
 
@@ -30,7 +31,7 @@ public:
 	bool Collision();
 	void printDebug(int num);
 	void Die();
-	int getHealth() { return health; }
+	int getHealth();
 	void setHealth(int h) { health = h; }
 	//the following are used in getting and setting
 	//information related to the enemy sprite

@@ -12,9 +12,18 @@ Turner Program 5
 
 Enemy::Enemy() {
 	death = NULL;
-	health = 1;	//temp setting
+	health = -3;	//FIXME temp
 	live = false;
 	death_loop = 0;
+	//badGuy;
+}
+
+Enemy::Enemy(char* name, ALLEGRO_COLOR color) {
+	death = NULL;
+	live = false;
+	death_loop = 0;
+	health = -3;
+	//badGuy(name, color);
 }
 
 Enemy::~Enemy() {
@@ -24,21 +33,23 @@ Enemy::~Enemy() {
 
 void Enemy::init(int width, int height, int max_health, int fw, int fh, int max, int col, char* file_name, char* samp) {
 	badGuy.InitEnemySprites(width, height, fw, fh, max, col, file_name, al_map_rgb(147, 187, 236));
+	live = true;
 	death = al_load_sample(samp);
 	MAX_HEALTH = max_health;
-	//health = max_health;
+	health = -3;
 }
 
 void Enemy::startEnemy(int sx, int sy) {
 	health = MAX_HEALTH;
 	live = true;
+	death_loop = 0;
 	badGuy.setX(sx);
 	badGuy.setY(sy);
 }
 
 void Enemy::hit() {
 	if (health > 0) {
-		health -= 1;
+		health--;
 	}
 	else if(health == 0) {
 		
@@ -49,13 +60,14 @@ void Enemy::hit() {
 void Enemy::moveEnemy(int width, int height, int xp, int yp) {
 	//xp and yp are the players
 	//x and y coordinates
-	if (live) {
+	/*if (live == false && health == 0) {
+		badGuy.~Sprite();
+	}
+	else */if (live) {	//DEBUG BREAK
 		//should move automatically towards Ness
-		live = badGuy.UpdateEnemySprites(width, height, xp, yp, health, death_loop, live);	//TEMP
+		badGuy.UpdateEnemySprites(width, height, xp, yp, health, death_loop, live);	//TEMP
 	}
-	else {
-		this->~Enemy();
-	}
+
 
 }
 
@@ -121,3 +133,7 @@ void Enemy::printDebug(int num) {
 	printf("enemy #%i y and by: %i, %i\n", num, badGuy.getY(), badGuy.getBoundY());
 
 }
+
+int Enemy::getHealth() { return health; }
+
+bool Enemy::getLive() { return live; }

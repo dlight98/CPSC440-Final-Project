@@ -20,11 +20,12 @@ class Sprite
 	friend bool endValue( int x, int y );
 public:
 	Sprite();
+	Sprite(char* name, ALLEGRO_COLOR color);
 	~Sprite();
 	void InitHeroSprites(int width, int height, char* name, ALLEGRO_COLOR color);
 	void InitEnemySprites(int width, int height, int fw, int fh, int max, int col, char* name, ALLEGRO_COLOR color);
 	void UpdateSprites(int width, int height, int dir, int ani_dir); //dir 0 = down, 1 = left, 2 = right, 3 = left
-	bool UpdateEnemySprites(int width, int height, int xp, int yp, int health, int& loop, bool& live);
+	void UpdateEnemySprites(int width, int height, int xp, int yp, int health, int& loop, bool& live);
 	void DrawSprites(int xoffset, int yoffset);
 	void DrawEnemySprites(int xoffset, int yoffset);
 	bool EnemyDie(int xoffset, int yoffset, bool &l);	//bool is for killing enemys

@@ -102,11 +102,6 @@ int main(int argc, char **argv){
    }
 
 
-   //Player, Enemy, Attack Variables
-   Player hero("wow.wav");	//Ness
-   Enemy starman[NUM_BAD1];	//starman
-   //Enemy deluxe[NUM_BAD2];	//starman deluxe	FIXME multiple of these
-   Attack shoot[NUM_SHOOT];	//number 
 
    //addon init
    al_install_keyboard();
@@ -127,12 +122,24 @@ int main(int argc, char **argv){
 	   exit(9);
    }
 
-   //TODO this is where I init sprites & audio
+   //Player, Enemy, Attack Variables
+   //Player hero("wow.wav");	//Ness
+   Player hero("wow.wav", "ness_spritesheet.bmp", al_map_rgb(255, 255, 255));	//Ness
+
+   /*Enemy starman[NUM_BAD1] = { Enemy("starman_sheet.png", al_map_rgb(147, 187, 236)),
+		Enemy("starman_sheet.png", al_map_rgb(147, 187, 236)), Enemy("starman_sheet.png", al_map_rgb(147, 187, 236)) ,
+		Enemy("starman_sheet.png", al_map_rgb(147, 187, 236)), Enemy("starman_sheet.png", al_map_rgb(147, 187, 236)) };	//starman
+	*/   
+   Enemy starman[NUM_BAD1];		//DEBUG BREAK
+	//Enemy deluxe[NUM_BAD2];	//starman deluxe	FIXME multiple of these
+   Attack shoot[NUM_SHOOT];	//number 
+
+   //this is where I init sprites & audio
    hero.init(WIDTH, HEIGHT, "ness_spritesheet.bmp", "wow.wav");
-   for (int i = 0; i < NUM_BAD1; i++) {
+   /*for (int i = 0; i < NUM_BAD1; i++) {
 	   starman[i].init(WIDTH, HEIGHT, 1, 50, 70, 3, 3, "starman_sheet.png", "enemydie.wav");
 
-   }
+   }*/
    //deluxe.init(WIDTH, HEIGHT, 3, 50, 70, 2, 2, "starman_deluxe_sheet.png", "enemydie.wav");	//TODO init this
 
 
@@ -161,7 +168,7 @@ int main(int argc, char **argv){
 
    while (!gameOver) {
 
-	   if (levelOver) {
+	   if (levelOver == true) {
 		   al_clear_to_color(al_map_rgb(0, 0, 0));
 		   level++;
 		   lvl_defeat1 = 0;
@@ -174,7 +181,7 @@ int main(int argc, char **argv){
 		   hero.DrawSprites(WIDTH / 2, HEIGHT / 2);
 		   for (int i = 0; i < NUM_BAD1; i++) {
 			   starman[i].setLive(false);
-			   starman[i].setHealth(0);
+			   starman[i].setHealth(-1);
 		   }
 		   al_flip_display();
 		   levelOver = false;
@@ -221,9 +228,9 @@ int main(int argc, char **argv){
 		   }
 
 		   //spawn enemies
-		   for (int i = 0; i < NUM_BAD1; i++) {
-			   if (count % 60 == 0 && lvl_defeat1 < lvl_need1) {	//FIXME should be &&
-				   if (starman[i].getLive() == false || starman[i].getHealth() <= 0) {
+		   if (count % 60 == 0 && lvl_defeat1 < lvl_need1) {	//FIXME should be &&
+				for (int i = 0; i < NUM_BAD1; i++) {
+				   if (starman[i].getLive() == false && starman[i].getHealth() <= 0) {
 					   int num = rand() % 4;	//0 = top, 1 = bottom, 2 = left, 3 = right
 					   int xspot = -1;
 					   int yspot = -1;
@@ -248,16 +255,20 @@ int main(int argc, char **argv){
 						   yspot = (rand() % 26) + 224 + 32;
 					   }
 					   if (xspot != -1) {
+						   starman[i].init(WIDTH, HEIGHT, 1, 50, 70, 3, 3, "starman_sheet.png", "enemydie.wav");
 						   starman[i].startEnemy(xspot, yspot);
 					   }
-					   break;
+					   //break;
 				   }
 			   }
 		   }
 
 		   //update enemies
-		   for (int i = 0; i < NUM_BAD1; i++) {
-			   starman[i].moveEnemy(WIDTH, HEIGHT, hero.getHero().getX(), hero.getHero().getY());
+		   for (int i = 0; i < NUM_BAD1; i++) {	//DEBUG
+				starman[i].moveEnemy(WIDTH, HEIGHT, hero.getHero().getX(), hero.getHero().getY());
+				   /*if (!(starman[i].getLive() == true && starman[i].getHealth() >= 0)) {
+					   break;
+				   }*/
 		   }
 
 		   //check attack collision with enemy

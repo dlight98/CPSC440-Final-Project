@@ -18,6 +18,7 @@ public:
 	//todo
 	Player();
 	Player(char* samp);
+	Player(char* samp, char* name, ALLEGRO_COLOR color);
 	Sprite getHero() { return hero; }
 	~Player();
 	void init(int width, int height, char* file_name, char* samp);

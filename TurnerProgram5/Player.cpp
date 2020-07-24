@@ -14,10 +14,17 @@ Player::Player() {
 	dir = 5;
 }
 
+Player::Player(char* samp, char* name, ALLEGRO_COLOR color) {
+	ouch = al_load_sample(samp);
+	dir = 5;
+	//hero(name, color);
+}
+
 Player::Player(char* samp) {
 	ouch = al_load_sample(samp);
 	dir = 5;
 }
+
 
 Player::~Player() {
 	hero.~Sprite();

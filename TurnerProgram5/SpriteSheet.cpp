@@ -9,10 +9,21 @@ Turner Program 5
 Sprite::Sprite()
 {
 	image=NULL;
+
 }
+
+Sprite::Sprite(char* name, ALLEGRO_COLOR color)
+{
+	image = NULL;
+	/*image = al_load_bitmap(name);
+	al_convert_mask_to_alpha(image, color);*/
+}
+
 Sprite::~Sprite()
 {
-	//al_destroy_bitmap(image);
+	if (image != NULL) {
+		//al_destroy_bitmap(image);
+	}
 }
 void Sprite::InitHeroSprites(int width, int height, char* name, ALLEGRO_COLOR color)
 {
@@ -166,16 +177,13 @@ void Sprite::UpdateSprites(int width, int height, int dir, int ani_dir)
 
 }
 
-bool Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int health, int &loop, bool &live) {
+void Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int health, int &loop, bool &live) {
 	int oldx = x;
-	int oldy = y;
-
-	boundx = x + frameWidth; // *.9;	//the *.9 makes the hitbox accurate
-	boundy = y + frameHeight; // *.9;	//to the scaled bitmap
+	int oldy = y;	//DEBUG BREAK
 
 	//xp and yp are the players
 	//x and y coordinates
-	if (health <= 0) {
+	if (health == 0) {
 		if (loop < 3) {
 			if (++frameCount > frameDelay) {
 				frameCount = 0;
@@ -186,10 +194,10 @@ bool Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int healt
 			}
 		}
 		else {
-			live = false;
+			live = false;	//DEBUG BREAK
 		}
 	}
-	else {
+	else if(health > 0) {
 		//move towards ness at 1 per frame (ness moves at 2 per frame)
 		//this allows ness to outrun them
 		if (xp > x) {
@@ -241,10 +249,14 @@ bool Sprite::UpdateEnemySprites(int width, int height, int xp, int yp, int healt
 		}
 		
 	}
-	
-	boundx = x + frameWidth; //*.9;	//this updates the bound boxes
-	boundy = y + frameHeight;// *.9;	//to check for collision
-	return true;
+	else {
+		live = false;
+	}
+	if (live == true) {
+		boundx = x + frameWidth; //*.9;	//this updates the bound boxes
+		boundy = y + frameHeight;// *.9;	//to check for collision
+
+	}
 }
 
 
