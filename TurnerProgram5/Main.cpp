@@ -25,7 +25,7 @@ using namespace std;
  
 int collided(int x, int y);  //Tile Collision
 bool endValue(int x, int y); //End Block with the User Value = 8
-void drawStatus(ALLEGRO_FONT* font, int level, int remaining, int width, int height);
+void drawStatus(ALLEGRO_FONT* font, int level, int remaining, int lives, int width, int height);
 void drawIntro();
 void drawEnd();
 
@@ -155,12 +155,13 @@ int main(int argc, char **argv){
 
 
    while (!gameOver) {
+
 	   if (levelOver) {
 		   al_clear_to_color(al_map_rgb(0, 0, 0));
 		   level++;
 		   lvl_defeat1 = 0;
 		   //lvl_defeat2 = 0;
-		   lvl_need1 = (NUM_BAD1 * 2) * (level / 2 );
+		   lvl_need1 = (NUM_BAD1 * 2) + (10 * level);
 		   //lvl_need2 = (NUM_BAD2 * 2) * (level / 2);
 		   MapDrawFG(xOff, yOff, 0, 0, WIDTH - 1, HEIGHT - 1, 0);
 		   hero.setX(WIDTH / 2);
@@ -174,6 +175,7 @@ int main(int argc, char **argv){
 		   levelOver = false;
 		   //al_rest(3.0);
 	   }
+
 	   ALLEGRO_EVENT ev;
 	   al_wait_for_event(event_queue, &ev);
 	   if (ev.type == ALLEGRO_EVENT_TIMER)
@@ -275,7 +277,7 @@ int main(int argc, char **argv){
 			   }
 		   }
 
-		   if (lvl_defeat1 == lvl_need1) {
+		   if (lvl_defeat1 >= lvl_need1) {
 			   levelOver = true;
 		   }
 
@@ -402,7 +404,7 @@ int main(int argc, char **argv){
 			   gameOver = true;
 		   }
 		   count++;
-		   drawStatus(font, level, lvl_need1-lvl_defeat1, WIDTH, TRUE_HEIGHT);
+		   drawStatus(font, level, lvl_need1-lvl_defeat1, h_lives, WIDTH, TRUE_HEIGHT);
 		   al_flip_display();
 		   al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -442,13 +444,16 @@ bool endValue(int x, int y)
 		return false;
 }
 
-void drawStatus(ALLEGRO_FONT* font, int level, int remaining, int width, int height) {
+void drawStatus(ALLEGRO_FONT* font, int level, int remaining, int lives, int width, int height) {
 	//TODO make it have 
 	//lives bar
-	//number of enemies defeated
-	//number of enemies left
-	//level
-	
+
+	al_draw_line(0, height - 100, width, height - 100, al_map_rgb(255, 255, 0), 2);
+	for (int i = 0; i < 5; i++) {
+		if (lives > i) {
+			al_draw_filled_circle(20 + 20 * i, height - (height - (height - 100)) / 2, 10, al_map_rgb(219, 79, 144));
+		}
+	}
 	al_draw_textf(font, al_map_rgb(255, 255, 255), 75, height - 75, 0, "Level: %i", level);
 	al_draw_textf(font, al_map_rgb(255, 255, 255), width - 100, height - 75, 0, "Left: %i", remaining);
 	//al_draw_filled_rectangle(width - 76, 0, width, 20, al_map_rgb(255, 255, 255));
